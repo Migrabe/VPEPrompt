@@ -12,12 +12,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>VPE Prompt Builder Mobile 2026 — v4.0</title>
   <meta name="theme-color" content="#07111f">
-  <link rel="canonical" href="/">
+  <link rel="canonical" href="../">
   <link rel="preconnect" href="https://fonts.googleapis.com/">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Manrope:wght@500;600;700;800&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link id="css2LocalLink" rel="stylesheet">
-  <link rel="stylesheet" href="/mobile/mobile.css">
+  <link rel="stylesheet" href="mobile.css">
   <style>
     *,
     *::before,
@@ -3736,7 +3736,7 @@
           </div>
         </div>
         <div class="header-right">
-          <a class="option-btn version-link" href="/?view=desktop" style="text-decoration:none;"
+          <a class="option-btn version-link" href="../?view=desktop" style="text-decoration:none;"
             onclick="localStorage.setItem('prefer-desktop','1'); document.cookie='prefer-desktop=1; max-age=31536000; path=/; SameSite=Lax';">Desktop</a>
           <button class="option-btn action-btn" id="headerUndoBtn" data-action-id="undo-step" title="Шаг назад">↶</button>
           <button class="option-btn action-btn" id="headerCollapseBtn" data-action-id="collapse-all"
@@ -5845,14 +5845,13 @@
       </div>
 
       <script>
-        window.VPE_CONFIG_BASE_URL = "/config";
-        window.UI_BUTTONS_URL = "/api/ui/buttons";
+        window.VPE_CONFIG_BASE_URL = "../config";
       </script>
-      <script src="/js/client_logic_full.js"></script>
-      <script src="/js/action-buttons.js"></script>
-      <script src="/js/section-visibility.js"></script>
-      <script src="/js/version-chooser.js"></script>
-      <script src="/mobile/js/mobile-shell.js"></script>
+      <script src="../js/client_logic_full.js"></script>
+      <script src="../js/action-buttons.js"></script>
+      <script src="../js/section-visibility.js"></script>
+      <script src="../js/version-chooser.js"></script>
+      <script src="js/mobile-shell.js"></script>
 
       <div class="notification success" id="notification" role="status" aria-live="polite" aria-atomic="true">Всё
         сброшено</div>
