@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MOVEVPE Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .sidebar-item-active {
+            background: rgba(19, 127, 236, 0.1);
+            color: #137fec;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full flex-col">
+<!-- Top Toolbar -->
+<header class="h-14 flex items-center justify-between px-6 border-b border-slate-200/50 glass-panel sticky top-0 z-50">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-xl">deployed_code</span>
+</div>
+<h1 class="text-lg font-bold tracking-tight">MOVEVPE</h1>
+</div>
+<div class="h-6 w-px bg-slate-300"></div>
+<div class="flex items-center gap-1">
+<button class="p-1.5 hover:bg-slate-200/50 rounded transition-colors" title="Back">
+<span class="material-symbols-outlined text-xl">chevron_left</span>
+</button>
+<button class="p-1.5 hover:bg-slate-200/50 rounded transition-colors" title="Forward">
+<span class="material-symbols-outlined text-xl">chevron_right</span>
+</button>
+</div>
+<div class="flex items-center gap-4 ml-2">
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-slate-200/50 text-sm font-medium transition-all">
+<span class="material-symbols-outlined text-lg">grid_view</span>
+                        Overview
+                    </button>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-primary bg-primary/10 text-sm font-semibold">
+<span class="material-symbols-outlined text-lg">monitoring</span>
+                        Analytics
+                    </button>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="pl-10 pr-4 py-1.5 w-64 bg-slate-200/50 border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/50 transition-all" placeholder="Quick Search (⌘K)" type="text"/>
+</div>
+<div class="h-6 w-px bg-slate-300 mx-1"></div>
+<div class="flex items-center gap-1">
+<button class="p-2 hover:bg-slate-200/50 rounded-full transition-colors relative">
+<span class="material-symbols-outlined text-xl">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white"></span>
+</button>
+<button class="p-2 hover:bg-slate-200/50 rounded-full transition-colors">
+<span class="material-symbols-outlined text-xl">settings</span>
+</button>
+</div>
+<div class="flex items-center gap-2 pl-2 cursor-pointer group">
+<div class="size-8 rounded-full bg-slate-300 overflow-hidden border border-slate-200" data-alt="User profile avatar close up photo">
+<img alt="Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNluqv7j5S77Ut7_pSBDmSXOKdJlEvfg3X4f0eM4rcIGozYOFLZyI33LHnhN_DNAPzxNT3e4mNkkNfieUXmWaHBoA1-roYfqTMKjjvLEyHSP2t3pM3-AJKC3bfOk3TEyCA8Hq-b_s_KWu82puExN2fjCV86SFK9JyqvILQOMyByNPV_msevPU8bCEPLHPd_0s3RkDe5ysY9OGKXMAXGlbRKyf9OobExnA4GTur7NwS_GuoOSS2Y47y1Meex0e-SrEuEadCngUK7Ufo"/>
+</div>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-slate-600">expand_more</span>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Left Sidebar -->
+<aside class="w-64 flex flex-col border-r border-slate-200/50 glass-panel">
+<div class="p-4 space-y-6 overflow-y-auto flex-1">
+<div>
+<p class="px-3 mb-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Main</p>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg sidebar-item-active font-medium text-sm transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                                Dashboard
+                            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-200/50 text-slate-600 text-sm font-medium transition-all" href="#">
+<span class="material-symbols-outlined">rocket_launch</span>
+                                Projects
+                            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-200/50 text-slate-600 text-sm font-medium transition-all" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+                                Assets
+                            </a>
+</nav>
+</div>
+<div>
+<p class="px-3 mb-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Systems</p>
+<nav class="space-y-1">
+<a class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-slate-200/50 text-slate-600 text-sm font-medium transition-all" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">hub</span>
+                                    Network
+                                </div>
+<span class="bg-primary/10 text-primary text-[10px] px-1.5 py-0.5 rounded font-bold">LIVE</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-200/50 text-slate-600 text-sm font-medium transition-all" href="#">
+<span class="material-symbols-outlined">security</span>
+                                Firewall
+                            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-200/50 text-slate-600 text-sm font-medium transition-all" href="#">
+<span class="material-symbols-outlined">database</span>
+                                Databases
+                            </a>
+</nav>
+</div>
+<div>
+<p class="px-3 mb-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider">Labels</p>
+<div class="space-y-1">
+<div class="flex items-center gap-3 px-3 py-2 text-sm text-slate-600">
+<span class="size-2 rounded-full bg-emerald-500"></span>
+                                Production
+                            </div>
+<div class="flex items-center gap-3 px-3 py-2 text-sm text-slate-600">
+<span class="size-2 rounded-full bg-amber-500"></span>
+                                Staging
+                            </div>
+<div class="flex items-center gap-3 px-3 py-2 text-sm text-slate-600">
+<span class="size-2 rounded-full bg-primary"></span>
+                                Internal
+                            </div>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-slate-200/50 bg-slate-50/50">
+<div class="flex items-center gap-3 mb-3">
+<div class="flex-1">
+<div class="flex justify-between text-[11px] font-semibold text-slate-500 mb-1">
+<span>Storage Used</span>
+<span>84%</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-1.5">
+<div class="bg-primary h-1.5 rounded-full" style="width: 84%"></div>
+</div>
+</div>
+</div>
+<button class="w-full py-2 bg-white border border-slate-200 rounded-lg text-xs font-bold hover:shadow-sm transition-all">Upgrade Plan</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto p-6 bg-slate-50">
+<!-- Dashboard Grid -->
+<div class="max-w-7xl mx-auto space-y-6">
+<!-- Stats Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="glass-panel p-5 rounded-xl shadow-sm border border-slate-200 hover:border-primary/30 transition-all cursor-default">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="text-emerald-500 text-xs font-bold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-sm">trending_up</span> 12.5%
+                                </span>
+</div>
+<h3 class="text-slate-500 text-xs font-bold uppercase tracking-wide">Total Revenue</h3>
+<p class="text-2xl font-bold mt-1">$128,430.50</p>
+</div>
+<div class="glass-panel p-5 rounded-xl shadow-sm border border-slate-200 hover:border-primary/30 transition-all cursor-default">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-purple-500/10 rounded-lg text-purple-600">
+<span class="material-symbols-outlined">group</span>
+</div>
+<span class="text-red-500 text-xs font-bold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-sm">trending_down</span> 2.1%
+                                </span>
+</div>
+<h3 class="text-slate-500 text-xs font-bold uppercase tracking-wide">Active Users</h3>
+<p class="text-2xl font-bold mt-1">14,203</p>
+</div>
+<div class="glass-panel p-5 rounded-xl shadow-sm border border-slate-200 hover:border-primary/30 transition-all cursor-default">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-amber-500/10 rounded-lg text-amber-600">
+<span class="material-symbols-outlined">speed</span>
+</div>
+<span class="text-emerald-500 text-xs font-bold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-sm">trending_up</span> 0.4%
+                                </span>
+</div>
+<h3 class="text-slate-500 text-xs font-bold uppercase tracking-wide">Avg. Latency</h3>
+<p class="text-2xl font-bold mt-1">42ms</p>
+</div>
+<div class="glass-panel p-5 rounded-xl shadow-sm border border-slate-200 hover:border-primary/30 transition-all cursor-default">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-emerald-500/10 rounded-lg text-emerald-600">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<span class="text-slate-400 text-xs font-bold">Stable</span>
+</div>
+<h3 class="text-slate-500 text-xs font-bold uppercase tracking-wide">System Uptime</h3>
+<p class="text-2xl font-bold mt-1">99.98%</p>
+</div>
+</div>
+<!-- Charts & Interactive Widgets -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Main Performance Chart -->
+<div class="lg:col-span-2 glass-panel rounded-xl shadow-sm border border-slate-200 flex flex-col">
+<div class="p-5 border-b border-slate-100 flex items-center justify-between">
+<h3 class="font-bold text-slate-800">Performance Matrix</h3>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-xs font-bold rounded-lg border border-slate-200 bg-white">1H</button>
+<button class="px-3 py-1 text-xs font-bold rounded-lg border border-slate-200 bg-white">1D</button>
+<button class="px-3 py-1 text-xs font-bold rounded-lg border border-primary bg-primary/5 text-primary">1W</button>
+</div>
+</div>
+<div class="p-6 flex-1 min-h-[300px] flex flex-col justify-end">
+<div class="relative flex-1 flex items-end gap-2 pb-6">
+<!-- Simple Bars Visualization -->
+<div class="flex-1 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all" style="height: 40%"></div>
+<div class="flex-1 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all" style="height: 60%"></div>
+<div class="flex-1 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all" style="height: 45%"></div>
+<div class="flex-1 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all" style="height: 75%"></div>
+<div class="flex-1 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all" style="height: 90%"></div>
+<div class="flex-1 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all" style="height: 55%"></div>
+<div class="flex-1 bg-primary/40 rounded-t-lg border-x border-t border-primary relative" style="height: 85%">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap">85% Current</div>
+</div>
+<div class="flex-1 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all" style="height: 65%"></div>
+<div class="flex-1 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all" style="height: 70%"></div>
+<div class="flex-1 bg-primary/20 rounded-t-lg hover:bg-primary/40 transition-all" style="height: 40%"></div>
+</div>
+<div class="flex justify-between pt-4 border-t border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+</div>
+</div>
+</div>
+<!-- System Controls -->
+<div class="glass-panel rounded-xl shadow-sm border border-slate-200 p-5 space-y-6">
+<h3 class="font-bold text-slate-800 mb-4">Quick Actions</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-slate-100 flex items-center justify-center text-slate-600">
+<span class="material-symbols-outlined text-lg">sync</span>
+</div>
+<div>
+<p class="text-sm font-semibold">Auto-Scaling</p>
+<p class="text-[11px] text-slate-500">Enable dynamic clusters</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-slate-100 flex items-center justify-center text-slate-600">
+<span class="material-symbols-outlined text-lg">save</span>
+</div>
+<div>
+<p class="text-sm font-semibold">Daily Backups</p>
+<p class="text-[11px] text-slate-500">2:00 AM UTC</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-slate-100 flex items-center justify-center text-slate-600">
+<span class="material-symbols-outlined text-lg">bolt</span>
+</div>
+<div>
+<p class="text-sm font-semibold">Edge Caching</p>
+<p class="text-[11px] text-slate-500">Global delivery network</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<div class="pt-4 border-t border-slate-100">
+<button class="w-full flex items-center justify-center gap-2 py-2.5 bg-primary text-white rounded-lg font-bold text-sm shadow-md shadow-primary/20 hover:bg-primary/90 transition-all">
+<span class="material-symbols-outlined text-lg">rocket_launch</span>
+                                    Launch New Instance
+                                </button>
+<button class="w-full mt-2 py-2.5 text-slate-600 hover:bg-slate-100 rounded-lg font-bold text-sm transition-all border border-transparent hover:border-slate-200">
+                                    Download System Logs
+                                </button>
+</div>
+</div>
+</div>
+<!-- Recent Activity Table -->
+<div class="glass-panel rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+<div class="p-5 border-b border-slate-100 flex items-center justify-between bg-white/50">
+<h3 class="font-bold text-slate-800">Deployment History</h3>
+<button class="text-xs font-bold text-primary hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead>
+<tr class="bg-slate-50/50 text-slate-500 font-bold uppercase text-[11px] tracking-wider">
+<th class="px-6 py-4">Environment</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4">Commit</th>
+<th class="px-6 py-4">User</th>
+<th class="px-6 py-4 text-right">Date</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="hover:bg-slate-50/30 transition-colors group">
+<td class="px-6 py-4 font-semibold text-slate-800">Production-Cluster-A</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold">
+<span class="size-1.5 rounded-full bg-emerald-500"></span> Success
+                                            </span>
+</td>
+<td class="px-6 py-4 font-mono text-slate-500">8f2c01a</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-slate-200" data-alt="Small profile thumbnail">
+<img class="rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3KSjIBuFPp4qPuGEwY6T9sw0hn3GjetfpZVbYxOgrHEGxtLL80KkBQoea4mNMayZp9yGhAb12BsopjcFRRptzrqvRqpXMYf6MZQdz21pMQkb5y4I-KCEK7cEWy6ra4mXJkvc3ouVuKUY0Qx836VhzuSoQOsOD1_1XGD6ovEXbxRfXY8mvLnwCY9dJs3sCZ3xaD7INfM22WOHYv72quds29tRCkIE7ZDGlaWaoyozzeGqogSSSqUoSX8eTUHg9Qcg50XqEl_XxCjQR"/>
+</div>
+<span class="text-xs font-medium">Alex Rivera</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right text-slate-400 font-medium">2 mins ago</td>
+</tr>
+<tr class="hover:bg-slate-50/30 transition-colors">
+<td class="px-6 py-4 font-semibold text-slate-800">Staging-API-V2</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-xs font-bold animate-pulse">
+<span class="size-1.5 rounded-full bg-amber-500"></span> Building
+                                            </span>
+</td>
+<td class="px-6 py-4 font-mono text-slate-500">71a9ee4</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-slate-200" data-alt="Small profile thumbnail">
+<img class="rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmr12Kz5NPJ2CGb8jRSasI5NeyDCknYATBrohuD_bioPnKylaciDvPBglVFoC-xFtXZrFWC4mD3SbRQmHM0KDZwqDpfNxOFhDHSkKRG4R_iZhB-5lCg57bJMGgXSu4VDbvVI_05Z3WOW9ZEMiSecAWzQlwnXuvxhqwLx5jEtGmj4wg2CTPXNnnh6zmELE1eG4wo4PPyhdpz7xRkF7ASeQKfzzHRmfZlbGDmatky0rZoPPdsBAFzrUk0H-tIb-LEkkDQddEi0zjecNC"/>
+</div>
+<span class="text-xs font-medium">Sarah Chen</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right text-slate-400 font-medium">12 mins ago</td>
+</tr>
+<tr class="hover:bg-slate-50/30 transition-colors">
+<td class="px-6 py-4 font-semibold text-slate-800">Internal-Auth-Service</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold">
+<span class="size-1.5 rounded-full bg-emerald-500"></span> Success
+                                            </span>
+</td>
+<td class="px-6 py-4 font-mono text-slate-500">03d5c1b</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-slate-200" data-alt="Small profile thumbnail">
+<img class="rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBfM7n5ZjtNu3af2R34aaCXecCfVR4anTxCD-GilgwdQdzy11C1R_qd1gB-lyd4jkrt3VJ67I1Wo3VzbcNg_rJ4hU9at9Vr1EI-79Cd4ENYCsgnpJchWHDvskVjSHNHc1CKi5MuciIY47F5bIQ8tYq8WFHGa0IMPVpSVFyLv5iivl6FuzEjMdXBMNmc85Uk1I5P5ayy2ffDtVzjeSQGLee39COLn9GZvKmQDlvx0N5BGdA9LlEb9Guo_Y_ozpub9QxO-4U4tkTLfnP"/>
+</div>
+<span class="text-xs font-medium">Michael Jordan</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right text-slate-400 font-medium">45 mins ago</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

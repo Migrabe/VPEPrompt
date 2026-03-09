@@ -1,0 +1,102 @@
+{
+  "model": "nano-banana-pro",
+  "type": "text-to-image",
+  "prompt": "Generate an image. subject: A cinematic portrait of a woman in a red coat standing on a rainy neon street at night.",
+  "resolution": "2K",
+  "aspect_ratio": "16:9",
+  "num_images": 1,
+  "technical": {
+    "aspect_ratio": "16:9",
+    "resolution": "2K"
+  },
+  "parameters": {
+    "purpose": "Cinematic Still",
+    "format": "photorealistic",
+    "medium": "photograph",
+    "mood": "tense suspenseful thriller mood",
+    "camera": {
+      "body": "shot on ARRI Alexa 35, digital cinema, organic textures, high dynamic range",
+      "lens": "shot on Arri Signature Primes, velvety bokeh, magnetic skin tones, ultra-smooth background separation, warm and natural atmosphere",
+      "shot_size": "close-up portrait, head and shoulders, emotional connection, facial expression focus, detailed features",
+      "focal_length": "shot on 85mm lens, flattering portrait perspective, facial features compression, elegant subject separation",
+      "aperture": "f/1.4, shallow depth of field, creamy bokeh, subject isolation, soft background blur",
+      "angle": "eye level shot, neutral perspective, straight on angle, direct engagement",
+      "composition": "rule of thirds composition, subject on grid intersection, balanced negative space"
+    },
+    "lighting": {
+      "options": [],
+      "effects": [],
+      "palette": "teal and orange cinematic color grade, Hollywood blockbuster LUT, skin warm + shadow cool"
+    },
+    "light_type": null,
+    "light_scheme": "Rembrandt lighting setup, exactly one key light positioned at 45 degree angle slightly above eye level, distinct inverted light triangle under the eye on the shadow side of the face, chiaroscuro shading, dramatic painterly shadows, classic moody portraiture",
+    "materials": {
+      "skin": [
+        "visible skin pores, natural grain"
+      ],
+      "hair": [
+        "ultra detailed individual hair strands, each strand visible, photorealistic hair"
+      ],
+      "objects": [
+        "polished chrome"
+      ]
+    },
+    "text": {
+      "content": "SALE 50%",
+      "style": [
+        "bold sans-serif typography"
+      ]
+    },
+    "quality": "8k, masterpiece, best quality, ultra detailed",
+    "photo_style": "in the style of Annie Leibovitz, dramatic portrait lighting, rich colors",
+    "cinema_style": "cinematography by Roger Deakins, naturalistic light, precise framing, atmospheric",
+    "director_style": "directed by Denis Villeneuve, vast scale, muted desaturated palette, atmospheric silence, epic compositions",
+    "art_style": "Фотореализм",
+    "film_stock": "Kodak Vision3 500T",
+    "quick_style": null,
+    "fashion_food_style": null,
+    "emotion": "Serene",
+    "cinematic_preset": null,
+    "audio": {
+      "ambience": null,
+      "foley": null,
+      "cinematic_fx": null
+    },
+    "motion_blur": null
+  },
+  "modes": {
+    "generateFour": false,
+    "grid3x3": false,
+    "maxConsistency": true,
+    "before_after": false,
+    "seamless_pattern": false,
+    "motion_blur": false
+  },
+  "renderBoost": {
+    "skin": true,
+    "hair": true
+  },
+  "face_constraints": [
+    "Keep the facial features of the person exactly consistent with the reference image",
+    "Do not modify their identity",
+    "Preserve all unique identifiers including exact eye color and hair color",
+    "Maintain identical bone structure, skin tone, and facial imperfections like moles and scars across all variations"
+  ],
+  "seed": "12345",
+  "references": {
+    "type": "character reference",
+    "weight": 50,
+    "images": [
+      {
+        "name": "ref-01.jpg",
+        "size": 123456,
+        "description": "face and outfit",
+        "extract": [
+          "Лицо",
+          "Палитру"
+        ]
+      }
+    ]
+  },
+  "negative": "blurry, bad anatomy"
+}

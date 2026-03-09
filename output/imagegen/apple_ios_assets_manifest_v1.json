@@ -1,0 +1,41 @@
+{
+  "data": [
+    {
+      "id": "hero_key_visual",
+      "status": "ready_for_generation",
+      "use_case": "stylized-concept",
+      "size": "1536x1024",
+      "target_path": "output/imagegen/apple-ios-v1/001-premium-apple-ios-inspired-landing-hero-key-visual-for-an-ai.png"
+    },
+    {
+      "id": "device_mockup_portrait",
+      "status": "ready_for_generation",
+      "use_case": "ui-mockup",
+      "size": "1024x1536",
+      "target_path": "output/imagegen/apple-ios-v1/002-apple-ios-style-product-mockup-a-single-modern-smartphone-fl.png"
+    },
+    {
+      "id": "bento_feature_showcase",
+      "status": "ready_for_generation",
+      "use_case": "ui-mockup",
+      "size": "1536x1024",
+      "target_path": "output/imagegen/apple-ios-v1/003-feature-showcase-bento-composition-in-apple-ios-aesthetic-mu.png"
+    },
+    {
+      "id": "feature_objects_3d",
+      "status": "ready_for_generation",
+      "use_case": "stylized-concept",
+      "size": "1024x1024",
+      "target_path": "output/imagegen/apple-ios-v1/004-set-of-premium-3d-feature-objects-for-a-modern-ios-website-s.png"
+    }
+  ],
+  "meta": {
+    "style_direction": "Apple iOS-inspired, minimal premium, bento + liquid glass",
+    "palette": ["#F5F5F7", "#FFFFFF", "#1D1D1F", "#0A84FF", "#34C759"],
+    "batch_file": "tmp/imagegen/apple_ios_assets_v1.jsonl",
+    "model": "gpt-image-1.5",
+    "quality": "high",
+    "generated_at": "2026-03-06",
+    "live_generation": "blocked_missing_openai_api_key"
+  }
+}
