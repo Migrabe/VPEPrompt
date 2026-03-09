@@ -1,0 +1,18 @@
+{
+  "desktop": {
+    "url": "http://127.0.0.1:3001/",
+    "prompt_excerpt": "Generate an image.\nsubject: astronaut portrait with reflective visor and rain",
+    "json_subject": "astronaut portrait with reflective visor and rain"
+  },
+  "mobile": {
+    "mobile_url": "http://127.0.0.1:3001/mobile/",
+    "post_switch_url": "http://127.0.0.1:3001/",
+    "prompt_excerpt": "Generate an image.\nsubject: mobile hero card for a cinematic travel poster",
+    "json_subject": "mobile hero card for a cinematic travel poster"
+  },
+  "artifacts": [
+    "output\\playwright\\desktop-audit.png",
+    "output\\playwright\\mobile-audit.png",
+    "output\\playwright\\mobile-to-desktop-audit.png"
+  ]
+}

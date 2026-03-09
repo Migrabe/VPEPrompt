@@ -1,0 +1,131 @@
+Вот готовый, отформатированный список из 29 световых схем. 
+Скопируй этот текст и отправь его в Codex с просьбой: 
+"Обнови опции в секции 'Освещение' (Lighting) в моем генераторе промптов, используя этот список. Сохрани названия на русском/английском и привяжи к ним указанные промпты."
+
+=== 1. КЛАССИЧЕСКИЕ ПОРТРЕТНЫЕ СХЕМЫ ===
+
+1. Рембрандтовский свет (Rembrandt Lighting)
+Название в меню: Рембрандтовский свет / Rembrandt Lighting
+Промпт: Rembrandt lighting setup, exactly one key light positioned at 45 degree angle slightly above eye level, distinct inverted light triangle under the eye on the shadow side of the face, chiaroscuro shading, dramatic painterly shadows, classic moody portraiture
+
+2. Разделяющий свет (Split Lighting)
+Название в меню: Разделяющий свет / Split Lighting
+Промпт: Split lighting setup, exact 90 degree side lighting, severe contrast, face divided perfectly in half down the midline, one side brightly lit, opposite side plunging into pitch black shadow, intense dramatic cinematic noir portrait
+
+3. Свет «Бабочка» (Butterfly / Paramount)
+Название в меню: Свет "Бабочка" / Paramount Lighting
+Промпт: Paramount Butterfly lighting setup, frontal key light placed high completely centered above the camera axis pointing down, distinctive symmetrical butterfly-shaped shadow directly under the nose, glowing pristine skin texture, vintage Hollywood glamour photography
+
+4. Петлевой свет (Loop Lighting)
+Название в меню: Петлевой свет / Loop Lighting
+Промпт: Loop lighting setup, flattering softbox key light placed at a 30 degree angle, gentle soft loop-shaped shadow falling diagonally from the nose onto the cheek, well-lit even features, pleasing natural volumetric dimension, corporate commercial photography
+
+5. Схема «Ракушка» (Clamshell / Beauty Lighting)
+Название в меню: Бьюти-свет "Ракушка" / Clamshell Lighting
+Промпт: Clamshell beauty lighting setup, flawless flat shadowless flat illumination, key light high and fill reflector directly below the chin, glowing immaculate skin texture, striking double catchlights in the eyes, high-end macro cosmetic advertising portrait
+
+6. Студийный трехточечный свет (Studio Three-Point Lighting)
+Название в меню: Студийный трехточечный / Three-Point Lighting
+Промпт: Professional studio three-point lighting setup, perfectly balanced soft key light, gentle fill light softening harsh shadows, crisp rim light separating subject from the backdrop, flawless commercial portraiture
+
+=== 2. СХЕМЫ ДЛЯ РАБОТЫ С ФОНОМ ===
+
+7. Контровой свет (Rim / Backlighting)
+Название в меню: Контровой силуэтный / Rim Lighting
+Промпт: Rim lighting setup, strong pure backlighting, pitch black unlit face, camera facing the dark silhouette, brilliant glowing halo of light outlining the hair and shoulders, subject distinctly separated from the deep dark background, epic cinematic mood
+
+8. Высокий ключ (High-Key Lighting)
+Название в меню: Высокий ключ / High-Key Lighting
+Промпт: High-key lighting setup, hyper-bright pure white background, completely shadowless environment, intense uniform wrap-around softbox illumination, overexposed brilliant highlights, ethereal airy atmosphere, pristine optimistic commercial product photography
+
+9. Низкий ключ (Low-Key Lighting)
+Название в меню: Низкий ключ / Low-Key Lighting
+Промпт: Low-Key lighting setup, pitch black environment, single harsh directional spotlight beam cutting through darkness, 90% of the image in crushing deep shadows, intense dramatic chiaroscuro focus only on the subject's face, moody somber thriller aesthetic
+
+=== 3. СХЕМЫ КОРРЕКЦИИ ===
+
+10. Широкое освещение (Broad Lighting)
+Название в меню: Широкое освещение / Broad Lighting
+Промпт: Broad lighting setup, subject's face turned diagonally away from light, intense illumination falling on the broad side of the face nearest to the camera lens, stark realistic honest portraiture, expansive well-lit facial structure
+
+11. Узкое освещение (Short Lighting)
+Название в меню: Узкое освещение / Short Lighting
+Промпт: Short lighting setup, subject body turned towards the light source, front broad half of the face nearest the camera in deep sculpting shadow, far narrow side brightly lit, slimming dramatic facial contouring, atmospheric psychological portrait
+
+=== 4. СЛОЖНЫЕ И КИНЕМАТОГРАФИЧНЫЕ ЭФФЕКТЫ ===
+
+12. Перекрестное освещение (Cross Lighting)
+Название в меню: Перекрестный свет / Cross Lighting
+Промпт: Cross lighting setup, dual harsh light sources intersecting from opposite sides, extreme edge contrast, highly accentuated skin and muscle texture, gritty hyperrealistic athletic portraiture, deep shadows diving down the center line
+
+13. Цветные гели (Bisexual Lighting / Split Gel)
+Название в меню: Неоновые гели / Split Gel Lighting
+Промпт: Bisexual neon lighting setup, split dual-color gel lighting, vibrant cyan blue light shining perfectly from the left, intense magenta pink light from the right side, retro-futuristic synthwave aesthetic, high-gloss cyberpunk portrait
+
+14. Силуэт «Голливудской звезды» (Halo Backlight + Soft Fill)
+Название в меню: Премиум силуэт / Halo Backlight
+Промпт: Premium studio lighting setup, piercing brilliant halo backlight rimming the hair and shoulders, combined with massive ultra-soft front softbox fill lighting to flatten facial wrinkles, flawless cosmetic interview lighting, rich glossy expensive TV aesthetic
+
+15. Подсветка снизу (Underlighting / Monster Lighting)
+Название в меню: Нижний свет "Хоррор" / Underlighting
+Промпт: Severe underlighting setup, single light source placed on the floor pointing directly up at the chin, unnatural inverted facial shadows extending upward onto the forehead, spooky eerie campfire aesthetic, unsettling horror cinematography
+
+16. Кольцевая вспышка (Avedon Ring Flash)
+Название в меню: Жесткая прямая вспышка / Ring Flash
+Промпт: Direct harsh ring-flash lighting setup, Terry Richardson style paparazzi flash aesthetic, flat frontal strobe light, completely suppressing facial texture but creating a distinct hard-edged black halo shadow directly on the wall immediately behind the subject, 90s gritty high-fashion editorial
+
+17. Силуэт в дверном проеме (Framed Silhouette)
+Название в меню: Силуэт в проеме / Framed Silhouette
+Промпт: Pure framing silhouette lighting setup, intensely overexposed bright sunny background seen through an architectural frame like a doorway, unlit subject standing completely in pitch black shadow forming a perfect stark 2D silhouette shape against the brilliant light, epic mysterious cinematic entrance
+
+18. Эффект Жалюзи (Gobo Lighting / Venetian Blinds)
+Название в меню: Тени от жалюзи / Gobo Lighting
+Промпт: Gobo lighting setup, harsh directional light projected directly through venetian blinds, distinct sharp stripes of light and dark shadows slicing diagonally across the subject's face and background wall, moody 1940s private eye noir aesthetic, suspense and secrecy
+
+19. Точечный прожектор (Top-Down Spotlight)
+Название в меню: Вертикальный прожектор / Top-Down Spotlight
+Промпт: Harsh top-down vertical spotlighting setup, single severe bare bulb hanging directly dead-center above the head pointing down, 'skull effect' with eyes plunged into pitch black sockets, long sharp shadow covering the mouth, grim oppressive interrogation room aesthetic
+
+20. Драматическое светотеневое освещение (Dramatic Chiaroscuro)
+Название в меню: Драматическая игра теней / Dramatic Chiaroscuro
+Промпт: Dramatic chiaroscuro lighting, intense interplay of brilliant light and crushing pitch-black darkness, high-contrast sculptural illumination, moody Renaissance painting aesthetic, striking evocative shadows
+
+=== 5. ЕСТЕСТВЕННЫЙ И НАТУРНЫЙ СВЕТ ===
+
+21. Естественный мягкий свет (Soft Natural Light)
+Название в меню: Естественный мягкий свет / Soft Natural Light
+Промпт: Soft natural daylight simulation, massive ultra-diffused softbox illumination, gentle flattering light with virtually no harsh shadows, airy bright daytime aesthetic, clean minimalist photography
+
+22. Свет от окна (Window Light / Chiaroscuro Natural)
+Название в меню: Свет от окна / Natural Window Light
+Промпт: Natural window lighting setup, single large soft directional light source from exactly one side, Vermeer-style chiaroscuro, long soft gradient falloff into deep soothing shadows, gentle intimate indoor portraiture
+
+23. Яркое полуденное солнце (Bright Midday Sun / Harsh Light)
+Название в меню: Жесткое полуденное солнце / Bright Midday Sun
+Промпт: Harsh bright midday sunlight, intense overhead bare directional light, hard-edged black shadows under eyes and chin, high-contrast blown-out summer aesthetic, gritty unflinching realism
+
+24. Свет «Голубой час» (Blue Hour Twilight)
+Название в меню: Голубой час (Сумерки) / Blue Hour Twilight
+Промпт: Blue hour twilight lighting, cool soft enveloping cyan ambient light, post-sunset twilight atmosphere, delicate deep blue shadows, moody melancholic cinematic mood
+
+25. Свет «Золотой час» (Golden Hour / Flare Lighting)
+Название в меню: Золотой час (Закат) / Golden Hour
+Промпт: Golden hour lens-flare lighting setup, setting sun positioned extremely low on the horizon behind the subject shining directly into the camera lens, warm washed-out honey-amber contrast, cinematic optical lens flares and blooming glares, dreamy romantic nostalgic indie cinematography
+
+26. Свет сквозь листву (Dappled Light / Leaf Gobo)
+Название в меню: Пятнистый свет сквозь листву / Dappled Light
+Промпт: Dappled forest sunlight lighting, soft beautiful patches of light filtering through tree leaves, organic scattered shadows across the face and torso, ethereal summer aesthetic, natural outdoor romance
+
+=== 6. СПЕЦИАЛЬНЫЕ ЭФФЕКТЫ СВЕТА ===
+
+27. Подповерхностное рассеивание (Subsurface Scattering / SSS)
+Название в меню: Внутреннее свечение кожи / Subsurface Scattering
+Промпт: Intense subsurface scattering lighting effect, strong piercing backlight passing through translucent skin edges like ears and nostrils, warm glowing fleshy illumination from within, extreme photorealistic biological rendering
+
+28. Неоновое свечение (Neon Glow Lighting)
+Название в меню: Неоновая заливка / Neon Glow
+Промпт: Vibrant neon glow lighting, practical glowing signage illuminating the subject, saturated cyan and magenta light spilling smoothly across the face, nighttime cyberpunk street aesthetics, deep wet reflections
+
+29. Световой луч с туманом (Volumetric Fog / God Rays)
+Название в меню: Объемный свет в тумане / Volumetric Fog & God Rays
+Промпт: Volumetric fog lighting setup, distinct piercing god rays cutting through heavy atmospheric atmospheric haze, visibly structured beams of light, majestic mystical cinematic environment

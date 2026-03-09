@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apple iOS Design Variants</title>
+  <style>
+    :root {
+      --page-bg: #eef2f8;
+      --page-ink: #0f1115;
+      --panel-bg: rgba(255, 255, 255, 0.86);
+      --panel-stroke: rgba(255, 255, 255, 0.7);
+      --soft-shadow: 0 24px 65px rgba(23, 36, 58, 0.14);
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+    }
+
+    body {
+      font-family: "SF Pro Display", "SF Pro Text", "Avenir Next", "Helvetica Neue", sans-serif;
+      color: var(--page-ink);
+      background:
+        radial-gradient(circle at 15% -20%, rgba(88, 86, 214, 0.22), transparent 50%),
+        radial-gradient(circle at 90% 0%, rgba(10, 132, 255, 0.15), transparent 35%),
+        radial-gradient(circle at 50% 120%, rgba(255, 159, 10, 0.15), transparent 40%),
+        var(--page-bg);
+      padding: 28px clamp(16px, 3vw, 34px) 48px;
+    }
+
+    .header {
+      max-width: 1360px;
+      margin: 0 auto 26px;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-stroke);
+      backdrop-filter: blur(18px);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--soft-shadow);
+      padding: 22px clamp(18px, 3vw, 34px);
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #5d6471;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .lead {
+      margin: 10px 0 0;
+      max-width: 880px;
+      font-size: clamp(0.96rem, 2vw, 1.03rem);
+      line-height: 1.6;
+      color: #4b515d;
+    }
+
+    .variants {
+      max-width: 1360px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .variant {
+      --tone-a: #f8faff;
+      --tone-b: #dde8ff;
+      --accent: #0a84ff;
+      --text: #0f141f;
+      --muted: #5a6372;
+      --chip-bg: rgba(255, 255, 255, 0.58);
+      --screen-stroke: rgba(255, 255, 255, 0.62);
+      --card-shadow: 0 16px 36px rgba(26, 40, 66, 0.16);
+      position: relative;
+      border-radius: var(--radius-md);
+      background: linear-gradient(160deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.48));
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--soft-shadow);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .variant::before {
+      content: "";
+      position: absolute;
+      inset: -20% -10% auto;
+      height: 58%;
+      background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.68), transparent 62%);
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    .variant-top {
+      position: relative;
+      padding: 16px 16px 12px;
+      z-index: 2;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #3f4655;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .variant h2 {
+      margin: 10px 0 2px;
+      font-size: 1.08rem;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: #111520;
+    }
+
+    .variant p {
+      margin: 0;
+      font-size: 0.87rem;
+      line-height: 1.5;
+      color: #4c5362;
+    }
+
+    .screen {
+      position: relative;
+      margin: 12px 14px 14px;
+      border-radius: 25px;
+      border: 1px solid var(--screen-stroke);
+      background: linear-gradient(165deg, var(--tone-a), var(--tone-b));
+      padding: 10px;
+      box-shadow: var(--card-shadow);
+      min-height: 250px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    .screen::after {
+      content: "";
+      position: absolute;
+      right: -24px;
+      top: -26px;
+      width: 108px;
+      height: 108px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0));
+      pointer-events: none;
+    }
+
+    .status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+    }
+
+    .dynamic-island {
+      width: 66px;
+      height: 14px;
+      border-radius: 999px;
+      margin: 0 auto 10px;
+      background: rgba(0, 0, 0, 0.8);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    }
+
+    .hero-card {
+      border-radius: 16px;
+      padding: 12px;
+      background: var(--chip-bg);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+      margin-bottom: 10px;
+    }
+
+    .hero-card strong {
+      display: block;
+      font-size: 0.9rem;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+
+    .hero-card span {
+      font-size: 0.74rem;
+      color: var(--muted);
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .chip {
+      font-size: 0.68rem;
+      border-radius: 999px;
+      padding: 5px 8px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.55);
+      color: var(--text);
+    }
+
+    .list {
+      display: grid;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .item {
+      border-radius: 10px;
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.68);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      font-size: 0.72rem;
+    }
+
+    .item b {
+      font-weight: 600;
+    }
+
+    .item em {
+      font-style: normal;
+      color: var(--muted);
+    }
+
+    .cta {
+      margin-top: 10px;
+      border: 0;
+      border-radius: 12px;
+      padding: 9px 12px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: #fff;
+      background: linear-gradient(115deg, var(--accent), color-mix(in srgb, var(--accent) 70%, #ffffff));
+      box-shadow: 0 10px 22px color-mix(in srgb, var(--accent) 35%, transparent);
+      width: 100%;
+      text-align: center;
+    }
+
+    .variant.v2 { --tone-a: #fafafa; --tone-b: #ebedf0; --accent: #0071e3; --muted: #68707f; }
+    .variant.v3 { --tone-a: #090a0d; --tone-b: #1c1d23; --accent: #30d158; --text: #f5f7fb; --muted: #8d96a8; --chip-bg: rgba(28, 30, 38, 0.7); --screen-stroke: rgba(255, 255, 255, 0.1); }
+    .variant.v4 { --tone-a: #f6faff; --tone-b: #cfdfff; --accent: #5e5ce6; --muted: #5e6680; }
+    .variant.v5 { --tone-a: #eef4ff; --tone-b: #cadcff; --accent: #0a84ff; --muted: #5f6982; }
+    .variant.v6 { --tone-a: #f4f1ff; --tone-b: #d6dcff; --accent: #bf5af2; --muted: #665f7e; }
+    .variant.v7 { --tone-a: #f8fbff; --tone-b: #d8e7ff; --accent: #0a84ff; --muted: #5f6980; }
+    .variant.v8 { --tone-a: #1b1f25; --tone-b: #2f3646; --accent: #ff9f0a; --text: #f9fafc; --muted: #aeb7ca; --chip-bg: rgba(53, 59, 77, 0.58); --screen-stroke: rgba(255, 255, 255, 0.13); }
+    .variant.v9 { --tone-a: #fdf3eb; --tone-b: #f9dac2; --accent: #ff375f; --muted: #71574f; }
+    .variant.v10 { --tone-a: #ecf9ff; --tone-b: #bee9ff; --accent: #34c759; --muted: #4d6872; }
+
+    .variant.v3 .kicker,
+    .variant.v8 .kicker {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #f5f7ff;
+    }
+
+    .variant.v3 h2,
+    .variant.v8 h2 {
+      color: #f2f5ff;
+    }
+
+    .variant.v3 p,
+    .variant.v8 p {
+      color: #b2bdd3;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 14px 10px 24px;
+      }
+
+      .header {
+        border-radius: 20px;
+      }
+
+      .variants {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <p class="eyebrow">Apple iOS Style Board</p>
+    <h1>10 вариантов дизайна для твоего сайта в стиле Apple iOS</h1>
+    <p class="lead">Ниже собраны 10 направлений, каждое можно взять как готовую основу для редизайна главной страницы. Все варианты опираются на визуальный язык iOS: стекло, аккуратные радиусы, мягкие тени, читаемая иерархия и фокус на контент.</p>
+  </header>
+
+  <main class="variants">
+    <article class="variant v1">
+      <div class="variant-top">
+        <span class="kicker">01 • Liquid Glass</span>
+        <h2>Hero с жидким стеклом</h2>
+        <p>Светлый premium-лендинг с прозрачными слоями и мягким сиянием.</p>
+      </div>
+      <div class="screen">
+        <div class="status"><span>9:41</span><span>5G 100%</span></div>
+        <div class="dynamic-island"></div>
+        <div>
+          <div class="hero-card"><strong>Build cinematic prompts faster</strong><span>Apple-like clarity, zero noise UI</span></div>
+          <div class="chip-row"><span class="chip">Smart Presets</span><span class="chip">Live Preview</span><span class="chip">JSON Export</span></div>
+          <div class="list"><div class="item"><b>Template Studio</b><em>12 packs</em></div><div class="item"><b>Prompt Guard</b><em>On</em></div></div>
+        </div>
+        <div class="cta">Try Liquid Layout</div>
+      </div>
+    </article>
+
+    <article class="variant v2">
+      <div class="variant-top">
+        <span class="kicker">02 • Pure White</span>
+        <h2>Минимализм Apple Store</h2>
+        <p>Максимум воздуха, акцент на типографике и продуктовых блоках.</p>
+      </div>
+      <div class="screen">
+        <div class="status"><span>9:41</span><span>Wi-Fi</span></div>
+        <div class="dynamic-island"></div>
+        <div>
+          <div class="hero-card"><strong>One page. One intention.</strong><span>Short sections, strong hierarchy</span></div>
+          <div class="chip-row"><span class="chip">Large Type</span><span class="chip">White Space</span></div>
+          <div class="list"><div class="item"><b>Use Case</b><em>Creator</em></div><div class="item"><b>Devices</b><em>iPhone + Mac</em></div></div>
+        </div>
+        <div class="cta">Use Pure White</div>
+      </div>
+    </article>
+
+    <article class="variant v3">
+      <div class="variant-top">
+        <span class="kicker">03 • True Black Pro</span>
+        <h2>Pro-панель в стиле iOS Dark</h2>
+        <p>Контрастный интерфейс для ночной работы и технических задач.</p>
+      </div>
+      <div class="screen">
+        <div class="status"><span>9:41</span><span>LTE 96%</span></div>
+        <div class="dynamic-island"></div>
+        <div>
+          <div class="hero-card"><strong>Command your prompt stack</strong><span>Dense, sharp, no visual noise</span></div>
+          <div class="chip-row"><span class="chip">Audit</span><span class="chip">Diff</span><span class="chip">Logs</span></div>
+          <div class="list"><div class="item"><b>Conflict Scan</b><em>Passed</em></div><div class="item"><b>Runtime Check</b><em>Ready</em></div></div>
+        </div>
+        <div class="cta">Switch to Dark Pro</div>
+      </div>
+    </article>
+
+    <article class="variant v4">
+      <div class="variant-top">
+        <span class="kicker">04 • Mesh Glass</span>
+        <h2>Градиентный iOS-артборд</h2>
+        <p>Подходит для креативных лендингов и презентации возможностей.</p>
+      </div>
+      <div class="screen">
+        <div class="status"><span>9:41</span><span>5G</span></div>
+        <div class="dynamic-island"></div>
+        <div>
+          <div class="hero-card"><strong>Generate visuals with momentum</strong><span>Gradient mesh + floating cards</span></div>
+          <div class="chip-row"><span class="chip">Brand Kits</span><span class="chip">Color Logic</span></div>
+          <div class="list"><div class="item"><b>Mood Pack</b><em>Neon Calm</em></div><div class="item"><b>Speed</b><em>Fast</em></div></div>
+        </div>
+        <div class="cta">Apply Mesh Glass</div>
+      </div>
+    </article>
+
+    <article class="variant v5">
+      <div class="variant-top">
+        <span class="kicker">05 • Dynamic Island</span>
+        <h2>Навигация через верхний хаб</h2>
+        <p>Стиль iPhone 15/16: верхний блок-центр для быстрых действий.</p>
+      </div>
+      <div class="screen">
+        <div class="status"><span>9:41</span><span>100%</span></div>
+        <div class="dynamic-island"></div>
+        <div>
+          <div class="hero-card"><strong>Central action hub</strong><span>All key actions in one stripe</span></div>
+          <div class="chip-row"><span class="chip">Compose</span><span class="chip">Translate</span><span class="chip">Export</span></div>
+          <div class="list"><div class="item"><b>Pinned Tools</b><em>6</em></div><div class="item"><b>One Tap Flow</b><em>Enabled</em></div></div>
+        </div>
+        <div class="cta">Enable Island Hub</div>
+      </div>
+    </article>
+
+    <article class="variant v6">
+      <div class="variant-top">
+        <span class="kicker">06 • Vision Soft</span>
+        <h2>Полупрозрачный soft-depth</h2>
+        <p>Более футуристичная, воздушная версия iOS с глубиной слоев.</p>
+      </div>
+      <div class="screen">
+        <div class="status"><span>9:41</span><span>5G+</span></div>
+        <div class="dynamic-island"></div>
+        <div>
+          <div class="hero-card"><strong>Soft depth interface</strong><span>Layers with subtle motion and blur</span></div>
+          <div class="chip-row"><span class="chip">Floating HUD</span><span class="chip">Glass Stack</span></div>
+          <div class="list"><div class="item"><b>Depth Mode</b><em>2.5D</em></div><div class="item"><b>Animation</b><em>Gentle</em></div></div>
+        </div>
+        <div class="cta">Try Vision Soft</div>
+      </div>
+    </article>
+
+    <article class="variant v7">
+      <div class="variant-top">
+        <span class="kicker">07 • Widget Bento</span>
+        <h2>Блочная сетка виджетов</h2>
+        <p>iOS Home Screen логика: модульные секции с быстрым сканированием.</p>
+      </div>
+      <div class="screen">
+        <div class="status"><span>9:41</span><span>Wi-Fi</span></div>
+        <div class="dynamic-island"></div>
+        <div>
+          <div class="hero-card"><strong>Everything in glance</strong><span>Bento cards for key metrics</span></div>
+          <div class="chip-row"><span class="chip">Stats</span><span class="chip">Templates</span><span class="chip">History</span></div>
+          <div class="list"><div class="item"><b>Prompt Runs</b><em>42 today</em></div><div class="item"><b>Saved Packs</b><em>18</em></div></div>
+        </div>
+        <div class="cta">Adopt Widget Grid</div>
+      </div>
+    </article>
+
+    <article class="variant v8">
+      <div class="variant-top">
+        <span class="kicker">08 • Event Stage</span>
+        <h2>Кинематографичный Apple Keynote</h2>
+        <p>Темный сценический стиль для сильного product storytelling.</p>
+      </div>
+      <div class="screen">
+        <div class="status"><span>9:41</span><span>5G</span></div>
+        <div class="dynamic-island"></div>
+        <div>
+          <div class="hero-card"><strong>Show the product like a keynote</strong><span>Large visuals, dramatic spacing</span></div>
+          <div class="chip-row"><span class="chip">Narrative</span><span class="chip">Reveal</span></div>
+          <div class="list"><div class="item"><b>Main Story</b><em>1 focus</em></div><div class="item"><b>Feature Drops</b><em>3</em></div></div>
+        </div>
+        <div class="cta">Launch Event Stage</div>
+      </div>
+    </article>
+
+    <article class="variant v9">
+      <div class="variant-top">
+        <span class="kicker">09 • Warm Editorial</span>
+        <h2>Теплый редакционный стиль</h2>
+        <p>Мягкая палитра для human-centered брендов и контентных страниц.</p>
+      </div>
+      <div class="screen">
+        <div class="status"><span>9:41</span><span>LTE</span></div>
+        <div class="dynamic-island"></div>
+        <div>
+          <div class="hero-card"><strong>Craft stories, not dashboards</strong><span>Editorial rhythm with iOS polish</span></div>
+          <div class="chip-row"><span class="chip">Articles</span><span class="chip">Guides</span><span class="chip">Cases</span></div>
+          <div class="list"><div class="item"><b>Readability</b><em>High</em></div><div class="item"><b>Tone</b><em>Warm</em></div></div>
+        </div>
+        <div class="cta">Choose Editorial</div>
+      </div>
+    </article>
+
+    <article class="variant v10">
+      <div class="variant-top">
+        <span class="kicker">10 • Aqua Utility</span>
+        <h2>Свежий utility-интерфейс</h2>
+        <p>Легкий и быстрый стиль для SaaS и рабочих инструментов на каждый день.</p>
+      </div>
+      <div class="screen">
+        <div class="status"><span>9:41</span><span>5G</span></div>
+        <div class="dynamic-island"></div>
+        <div>
+          <div class="hero-card"><strong>Fast utility, clean controls</strong><span>Practical layout with premium finish</span></div>
+          <div class="chip-row"><span class="chip">Shortcuts</span><span class="chip">Queue</span><span class="chip">Sync</span></div>
+          <div class="list"><div class="item"><b>Auto Save</b><em>On</em></div><div class="item"><b>Workflow</b><em>3 steps</em></div></div>
+        </div>
+        <div class="cta">Use Aqua Utility</div>
+      </div>
+    </article>
+  </main>
+</body>
+</html>

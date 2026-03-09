@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apple macOS Design Variants</title>
+  <style>
+    :root {
+      --page-bg: #dde5f2;
+      --ink: #121723;
+      --muted: #5d6678;
+      --shell: rgba(255, 255, 255, 0.72);
+      --shell-border: rgba(255, 255, 255, 0.84);
+      --shell-shadow: 0 28px 76px rgba(19, 35, 64, 0.22);
+      --r-xl: 30px;
+      --r-lg: 22px;
+      --r-md: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+    }
+
+    body {
+      font-family: "Avenir Next", "SF Pro Text", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 620px at 8% -16%, rgba(255, 120, 86, 0.34), transparent 65%),
+        radial-gradient(1080px 650px at 92% -12%, rgba(88, 101, 242, 0.34), transparent 62%),
+        radial-gradient(1300px 840px at 50% 120%, rgba(79, 176, 255, 0.22), transparent 66%),
+        var(--page-bg);
+      padding: 24px clamp(14px, 2.8vw, 34px) 40px;
+    }
+
+    .hero {
+      max-width: 1440px;
+      margin: 0 auto 24px;
+      border-radius: var(--r-xl);
+      border: 1px solid var(--shell-border);
+      background: var(--shell);
+      backdrop-filter: blur(24px);
+      box-shadow: var(--shell-shadow);
+      padding: 22px clamp(16px, 3vw, 34px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -90px;
+      top: -90px;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0));
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 11px;
+      color: #55607a;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "SF Pro Display", "Avenir Next", sans-serif;
+      font-size: clamp(1.5rem, 3.8vw, 2.5rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      max-width: 900px;
+    }
+
+    .lead {
+      margin: 10px 0 0;
+      font-size: clamp(0.92rem, 1.9vw, 1.03rem);
+      line-height: 1.6;
+      max-width: 940px;
+      color: var(--muted);
+    }
+
+    .variants {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 18px;
+    }
+
+    .variant {
+      --top-a: #fbfdff;
+      --top-b: #d8e5ff;
+      --accent: #0a84ff;
+      --window: rgba(255, 255, 255, 0.86);
+      --window-stroke: rgba(255, 255, 255, 0.7);
+      --pane: rgba(255, 255, 255, 0.55);
+      --pane-stroke: rgba(255, 255, 255, 0.72);
+      --text: #131828;
+      --hint: #64708a;
+      border-radius: var(--r-lg);
+      border: 1px solid rgba(255, 255, 255, 0.74);
+      background: linear-gradient(170deg, rgba(255, 255, 255, 0.77), rgba(255, 255, 255, 0.52));
+      box-shadow: var(--shell-shadow);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+      isolation: isolate;
+      opacity: 0;
+      transform: translateY(14px);
+      animation: rise 0.62s ease forwards;
+    }
+
+    .variant:nth-child(2) { animation-delay: 0.05s; }
+    .variant:nth-child(3) { animation-delay: 0.1s; }
+    .variant:nth-child(4) { animation-delay: 0.15s; }
+    .variant:nth-child(5) { animation-delay: 0.2s; }
+    .variant:nth-child(6) { animation-delay: 0.25s; }
+    .variant:nth-child(7) { animation-delay: 0.3s; }
+    .variant:nth-child(8) { animation-delay: 0.35s; }
+    .variant:nth-child(9) { animation-delay: 0.4s; }
+    .variant:nth-child(10) { animation-delay: 0.45s; }
+
+    .variant::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 100px;
+      background: linear-gradient(160deg, var(--top-a), var(--top-b));
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .head {
+      position: relative;
+      z-index: 1;
+      padding: 15px 16px 11px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.84);
+      background: rgba(255, 255, 255, 0.58);
+      color: #4f5870;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+    }
+
+    .variant h2 {
+      margin: 9px 0 3px;
+      font-size: 1.06rem;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .variant p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: #535c6f;
+      line-height: 1.45;
+    }
+
+    .window {
+      position: relative;
+      z-index: 1;
+      margin: 10px 14px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--window-stroke);
+      background: var(--window);
+      box-shadow: 0 18px 32px rgba(25, 40, 69, 0.2);
+      overflow: hidden;
+      color: var(--text);
+    }
+
+    .titlebar {
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.45));
+    }
+
+    .traffic {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot.red { background: #ff5f57; }
+    .dot.yellow { background: #febc2e; }
+    .dot.green { background: #28c840; }
+
+    .title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--hint);
+      margin-right: 6px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 94px 1fr;
+      min-height: 182px;
+    }
+
+    .sidebar {
+      background: rgba(255, 255, 255, 0.37);
+      border-right: 1px solid rgba(255, 255, 255, 0.48);
+      padding: 9px 8px;
+      display: grid;
+      gap: 6px;
+      align-content: start;
+    }
+
+    .nav {
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.62);
+      background: rgba(255, 255, 255, 0.58);
+      color: var(--hint);
+      font-size: 10px;
+      line-height: 1;
+      padding: 7px 7px;
+    }
+
+    .content {
+      padding: 10px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 8px;
+    }
+
+    .pill-row {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      border-radius: 999px;
+      border: 1px solid var(--pane-stroke);
+      background: var(--pane);
+      font-size: 10px;
+      padding: 4px 7px;
+      color: var(--hint);
+    }
+
+    .panel {
+      border-radius: 10px;
+      border: 1px solid var(--pane-stroke);
+      background: var(--pane);
+      padding: 8px 9px;
+      min-height: 58px;
+    }
+
+    .panel b {
+      display: block;
+      font-size: 11px;
+      line-height: 1.3;
+      margin-bottom: 3px;
+      letter-spacing: 0.01em;
+    }
+
+    .panel span {
+      font-size: 10px;
+      color: var(--hint);
+      line-height: 1.4;
+    }
+
+    .list {
+      display: grid;
+      gap: 5px;
+    }
+
+    .line {
+      border-radius: 8px;
+      border: 1px solid var(--pane-stroke);
+      background: var(--pane);
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      padding: 6px 8px;
+      color: var(--hint);
+    }
+
+    .cta {
+      margin-top: 3px;
+      border-radius: 10px;
+      border: 0;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: #fff;
+      padding: 8px 10px;
+      background: linear-gradient(120deg, var(--accent), color-mix(in srgb, var(--accent) 72%, #ffffff));
+      box-shadow: 0 12px 20px color-mix(in srgb, var(--accent) 35%, transparent);
+      text-align: center;
+    }
+
+    .v1 { --top-a: #fafdff; --top-b: #d5e4ff; --accent: #0a84ff; }
+    .v2 { --top-a: #f3fbff; --top-b: #d6ecff; --accent: #30b0ff; }
+    .v3 {
+      --top-a: #151922;
+      --top-b: #2a3042;
+      --accent: #34c759;
+      --window: rgba(24, 29, 40, 0.86);
+      --window-stroke: rgba(255, 255, 255, 0.14);
+      --pane: rgba(39, 45, 58, 0.68);
+      --pane-stroke: rgba(255, 255, 255, 0.12);
+      --text: #f3f6ff;
+      --hint: #b5bfd6;
+    }
+    .v4 { --top-a: #ffffff; --top-b: #e9edf4; --accent: #0071e3; }
+    .v5 { --top-a: #f5f3ff; --top-b: #d8dbff; --accent: #af52de; }
+    .v6 { --top-a: #f8fffb; --top-b: #d5f7e5; --accent: #30d158; }
+    .v7 { --top-a: #f6f9ff; --top-b: #cfdbff; --accent: #5e5ce6; }
+    .v8 {
+      --top-a: #1f1f26;
+      --top-b: #343641;
+      --accent: #ff9f0a;
+      --window: rgba(30, 31, 39, 0.86);
+      --window-stroke: rgba(255, 255, 255, 0.14);
+      --pane: rgba(56, 60, 72, 0.6);
+      --pane-stroke: rgba(255, 255, 255, 0.14);
+      --text: #f6f7fb;
+      --hint: #c2c7d4;
+    }
+    .v9 { --top-a: #fff6ef; --top-b: #ffd8bf; --accent: #ff5d73; }
+    .v10 { --top-a: #f1fcff; --top-b: #cbf0ff; --accent: #14b8a6; }
+
+    .v3 .tag,
+    .v8 .tag {
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.12);
+      color: #eef3ff;
+    }
+
+    .v3 p,
+    .v8 p {
+      color: #c0c9dc;
+    }
+
+    @keyframes rise {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 12px 10px 24px;
+      }
+
+      .hero {
+        border-radius: 18px;
+      }
+
+      .variants {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <p class="eyebrow">Apple macOS Style Board</p>
+    <h1>10 вариантов дизайна для сайта в стиле Apple macOS</h1>
+    <p class="lead">Каждый вариант имитирует desktop-язык macOS: оконная композиция, toolbar с traffic-lights, мягкое стекло, читабельные панели и аккуратный ритм интерфейса. Выбери направление, и его можно перенести на основной сайт.</p>
+  </header>
+
+  <main class="variants">
+    <article class="variant v1">
+      <div class="head">
+        <span class="tag">01 • Sonoma Glass</span>
+        <h2>Стеклянное рабочее окно</h2>
+        <p>Легкий premium-вид в духе macOS Sonoma с прозрачной глубиной.</p>
+      </div>
+      <div class="window">
+        <div class="titlebar"><div class="traffic"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="title">Prompt Studio</span></div>
+        <div class="layout">
+          <aside class="sidebar"><div class="nav">Overview</div><div class="nav">Templates</div><div class="nav">Assets</div></aside>
+          <section class="content">
+            <div class="pill-row"><span class="pill">Glass UI</span><span class="pill">Desktop</span></div>
+            <div class="panel"><b>Build cinematic prompts from one window</b><span>Clear hierarchy, low noise controls</span></div>
+            <div class="list"><div class="line"><span>Render queue</span><span>8</span></div><div class="line"><span>Live checks</span><span>On</span></div></div>
+            <div class="cta">Adopt Sonoma Glass</div>
+          </section>
+        </div>
+      </div>
+    </article>
+
+    <article class="variant v2">
+      <div class="head">
+        <span class="tag">02 • Aqua Classic</span>
+        <h2>Новый Aqua с мягким блеском</h2>
+        <p>Ностальгия ранних macOS с современными отступами и ритмом.</p>
+      </div>
+      <div class="window">
+        <div class="titlebar"><div class="traffic"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="title">Aqua Control</span></div>
+        <div class="layout">
+          <aside class="sidebar"><div class="nav">Home</div><div class="nav">Visuals</div><div class="nav">Exports</div></aside>
+          <section class="content">
+            <div class="pill-row"><span class="pill">Aqua</span><span class="pill">Rounded</span></div>
+            <div class="panel"><b>Friendly desktop shell for creators</b><span>Warm and approachable control surfaces</span></div>
+            <div class="list"><div class="line"><span>Presets</span><span>24</span></div><div class="line"><span>Brand mode</span><span>Active</span></div></div>
+            <div class="cta">Switch to Aqua</div>
+          </section>
+        </div>
+      </div>
+    </article>
+
+    <article class="variant v3">
+      <div class="head">
+        <span class="tag">03 • Midnight Pro</span>
+        <h2>Темная pro-консоль</h2>
+        <p>Для тяжелых сценариев: плотная структура, высокий контраст, фокус.</p>
+      </div>
+      <div class="window">
+        <div class="titlebar"><div class="traffic"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="title">Runtime Console</span></div>
+        <div class="layout">
+          <aside class="sidebar"><div class="nav">Logs</div><div class="nav">Rules</div><div class="nav">Diff</div></aside>
+          <section class="content">
+            <div class="pill-row"><span class="pill">Dark Pro</span><span class="pill">Audit</span></div>
+            <div class="panel"><b>Conflict checks and prompt contracts</b><span>Everything visible without clutter</span></div>
+            <div class="list"><div class="line"><span>Runtime</span><span>Passed</span></div><div class="line"><span>Anomalies</span><span>0</span></div></div>
+            <div class="cta">Enable Midnight Pro</div>
+          </section>
+        </div>
+      </div>
+    </article>
+
+    <article class="variant v4">
+      <div class="head">
+        <span class="tag">04 • White Studio</span>
+        <h2>Минималистичная студия</h2>
+        <p>Apple.com-подача: воздух, крупная типографика, один фокус на задачу.</p>
+      </div>
+      <div class="window">
+        <div class="titlebar"><div class="traffic"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="title">Studio Layout</span></div>
+        <div class="layout">
+          <aside class="sidebar"><div class="nav">Start</div><div class="nav">Scenes</div><div class="nav">Output</div></aside>
+          <section class="content">
+            <div class="pill-row"><span class="pill">Minimal</span><span class="pill">Editorial</span></div>
+            <div class="panel"><b>One clean interface for daily workflow</b><span>No decorative overload, just intention</span></div>
+            <div class="list"><div class="line"><span>Flow steps</span><span>3</span></div><div class="line"><span>Noise level</span><span>Low</span></div></div>
+            <div class="cta">Use White Studio</div>
+          </section>
+        </div>
+      </div>
+    </article>
+
+    <article class="variant v5">
+      <div class="head">
+        <span class="tag">05 • Gradient Deck</span>
+        <h2>Креативный macOS-дек</h2>
+        <p>Живые цветовые переходы и layered-карточки для яркого бренда.</p>
+      </div>
+      <div class="window">
+        <div class="titlebar"><div class="traffic"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="title">Creative Deck</span></div>
+        <div class="layout">
+          <aside class="sidebar"><div class="nav">Mood</div><div class="nav">Colors</div><div class="nav">Shots</div></aside>
+          <section class="content">
+            <div class="pill-row"><span class="pill">Gradient</span><span class="pill">Brand Kit</span></div>
+            <div class="panel"><b>Presentation-first dashboard for launches</b><span>Great for hero blocks and campaign pages</span></div>
+            <div class="list"><div class="line"><span>Themes</span><span>12</span></div><div class="line"><span>Visual tone</span><span>Bold</span></div></div>
+            <div class="cta">Apply Gradient Deck</div>
+          </section>
+        </div>
+      </div>
+    </article>
+
+    <article class="variant v6">
+      <div class="head">
+        <span class="tag">06 • Finder Modular</span>
+        <h2>Плитки как в Finder</h2>
+        <p>Контент-ориентированная структура: быстрое сканирование и сортировка.</p>
+      </div>
+      <div class="window">
+        <div class="titlebar"><div class="traffic"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="title">Finder Grid</span></div>
+        <div class="layout">
+          <aside class="sidebar"><div class="nav">Collections</div><div class="nav">Recent</div><div class="nav">Archive</div></aside>
+          <section class="content">
+            <div class="pill-row"><span class="pill">Modules</span><span class="pill">Cards</span></div>
+            <div class="panel"><b>Organize presets as visual folders</b><span>Fast onboarding for new users</span></div>
+            <div class="list"><div class="line"><span>Packs</span><span>37</span></div><div class="line"><span>Favorites</span><span>9</span></div></div>
+            <div class="cta">Adopt Finder Mode</div>
+          </section>
+        </div>
+      </div>
+    </article>
+
+    <article class="variant v7">
+      <div class="head">
+        <span class="tag">07 • Stage Manager</span>
+        <h2>Split-view с фокусом</h2>
+        <p>Макет для сценария «работа + предпросмотр» как Stage Manager.</p>
+      </div>
+      <div class="window">
+        <div class="titlebar"><div class="traffic"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="title">Split Workspace</span></div>
+        <div class="layout">
+          <aside class="sidebar"><div class="nav">Compose</div><div class="nav">Preview</div><div class="nav">History</div></aside>
+          <section class="content">
+            <div class="pill-row"><span class="pill">Split</span><span class="pill">Focus</span></div>
+            <div class="panel"><b>Edit prompt and see output side by side</b><span>Ideal for iteration-heavy teams</span></div>
+            <div class="list"><div class="line"><span>Layouts</span><span>4</span></div><div class="line"><span>Latency</span><span>Low</span></div></div>
+            <div class="cta">Use Stage Manager</div>
+          </section>
+        </div>
+      </div>
+    </article>
+
+    <article class="variant v8">
+      <div class="head">
+        <span class="tag">08 • Swift IDE</span>
+        <h2>IDE-подход для power users</h2>
+        <p>Вдохновлен Xcode: панели, статусы, четкие зоны ответственности.</p>
+      </div>
+      <div class="window">
+        <div class="titlebar"><div class="traffic"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="title">Developer Flow</span></div>
+        <div class="layout">
+          <aside class="sidebar"><div class="nav">Inspector</div><div class="nav">Build</div><div class="nav">Debug</div></aside>
+          <section class="content">
+            <div class="pill-row"><span class="pill">IDE</span><span class="pill">Dense UI</span></div>
+            <div class="panel"><b>Precise controls for advanced prompt engineering</b><span>Every toggle has a predictable place</span></div>
+            <div class="list"><div class="line"><span>Hotkeys</span><span>Enabled</span></div><div class="line"><span>Strict mode</span><span>On</span></div></div>
+            <div class="cta">Launch Swift IDE</div>
+          </section>
+        </div>
+      </div>
+    </article>
+
+    <article class="variant v9">
+      <div class="head">
+        <span class="tag">09 • Editorial Notes</span>
+        <h2>Теплый текстовый macOS</h2>
+        <p>Для контента и гайдов: спокойная палитра и приоритет читабельности.</p>
+      </div>
+      <div class="window">
+        <div class="titlebar"><div class="traffic"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="title">Notes Layout</span></div>
+        <div class="layout">
+          <aside class="sidebar"><div class="nav">Pages</div><div class="nav">Drafts</div><div class="nav">Library</div></aside>
+          <section class="content">
+            <div class="pill-row"><span class="pill">Editorial</span><span class="pill">Warm</span></div>
+            <div class="panel"><b>Human-centered look for case studies</b><span>Feels calm but still premium</span></div>
+            <div class="list"><div class="line"><span>Read score</span><span>High</span></div><div class="line"><span>Tone</span><span>Soft</span></div></div>
+            <div class="cta">Select Editorial</div>
+          </section>
+        </div>
+      </div>
+    </article>
+
+    <article class="variant v10">
+      <div class="head">
+        <span class="tag">10 • Data Cockpit</span>
+        <h2>Аналитический cockpit</h2>
+        <p>Практичный desktop-вариант с живыми статусами и KPI-блоками.</p>
+      </div>
+      <div class="window">
+        <div class="titlebar"><div class="traffic"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div><span class="title">Ops Dashboard</span></div>
+        <div class="layout">
+          <aside class="sidebar"><div class="nav">Metrics</div><div class="nav">Queue</div><div class="nav">Sync</div></aside>
+          <section class="content">
+            <div class="pill-row"><span class="pill">KPI</span><span class="pill">Realtime</span></div>
+            <div class="panel"><b>Operational center for daily production</b><span>Strong utility with polished macOS finish</span></div>
+            <div class="list"><div class="line"><span>Tasks today</span><span>56</span></div><div class="line"><span>System health</span><span>99%</span></div></div>
+            <div class="cta">Enable Data Cockpit</div>
+          </section>
+        </div>
+      </div>
+    </article>
+  </main>
+</body>
+</html>
