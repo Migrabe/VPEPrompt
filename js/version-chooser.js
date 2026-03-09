@@ -3,7 +3,7 @@
   const OPEN_QUERY = "chooseVersion";
 
   function isMobilePath() {
-    return window.location.pathname === "/mobile" || window.location.pathname.startsWith("/mobile/");
+    return window.location.pathname.includes("/mobile");
   }
 
   function getCleanSearch() {
@@ -15,13 +15,13 @@
   }
 
   function getDesktopTarget() {
-    const path = window.location.pathname.replace(/^\/mobile(\/|$)/, "/") || "/";
-    return `${path}${getCleanSearch()}${window.location.hash}`;
+    const searchPart = `${getCleanSearch()}${window.location.hash}`;
+    return isMobilePath() ? `../${searchPart}` : `./${searchPart}`;
   }
 
   function getMobileTarget() {
-    const path = isMobilePath() ? window.location.pathname : `/mobile${window.location.pathname === "/" ? "/" : window.location.pathname}`;
-    return `${path}${getCleanSearch()}${window.location.hash}`;
+    const searchPart = `${getCleanSearch()}${window.location.hash}`;
+    return isMobilePath() ? `./${searchPart}` : `mobile/${searchPart}`;
   }
 
   function setCurrentChoiceSeen() {

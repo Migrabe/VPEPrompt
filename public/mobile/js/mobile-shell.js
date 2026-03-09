@@ -10,9 +10,11 @@
   ];
 
   function getDesktopTarget() {
-    const pathname = window.location.pathname.replace(/^\/mobile(\/|$)/, "/");
-    const normalized = pathname === "" ? "/" : pathname;
-    return `${normalized}${window.location.search}${window.location.hash}`;
+    const url = new URL(window.location.href);
+    url.searchParams.delete("view");
+    const search = url.searchParams.toString();
+    const searchString = search ? `?${search}` : "";
+    return `../${searchString}${window.location.hash}`;
   }
 
   function preferDesktop() {
@@ -52,7 +54,7 @@
 
   function registerServiceWorker() {
     if (!("serviceWorker" in navigator)) return;
-    navigator.serviceWorker.register("/mobile/sw.js").catch(() => {});
+    navigator.serviceWorker.register("sw.js").catch(() => {});
   }
 
   document.addEventListener("DOMContentLoaded", () => {
