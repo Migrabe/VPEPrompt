@@ -3743,6 +3743,45 @@
     }
   </style>
   <style>
+    html {
+      margin: 0 !important;
+      padding: 0 !important;
+      min-height: 100% !important;
+      background:
+        radial-gradient(1200px 680px at -12% -24%, rgba(110, 220, 255, 0.18), transparent 58%),
+        radial-gradient(900px 520px at 108% -8%, rgba(255, 187, 116, 0.18), transparent 54%),
+        linear-gradient(180deg, #06111b 0%, #07131f 46%, #091824 100%) !important;
+      background-color: #07111f !important;
+      color-scheme: dark !important;
+    }
+
+    body.mobile-vpe-shell {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      min-width: 100% !important;
+      min-height: 100svh !important;
+      background:
+        radial-gradient(1200px 680px at -12% -24%, rgba(110, 220, 255, 0.16), transparent 58%),
+        radial-gradient(900px 520px at 108% -8%, rgba(255, 187, 116, 0.16), transparent 54%),
+        linear-gradient(180deg, #06111b 0%, #07131f 46%, #091824 100%) !important;
+      background-color: #07111f !important;
+      overscroll-behavior-x: none;
+    }
+
+    body.mobile-vpe-shell::before {
+      position: fixed !important;
+      inset: 0 !important;
+      pointer-events: none !important;
+    }
+
+    body.mobile-vpe-shell .wrap,
+    body.mobile-vpe-shell .app,
+    body.mobile-vpe-shell .main-layout {
+      width: 100% !important;
+      max-width: none !important;
+    }
+
     body.mobile-vpe-shell .app-header {
       position: relative !important;
       top: auto !important;
@@ -4230,6 +4269,7 @@
 
     body.mobile-vpe-shell .mobile-bottom-bar {
       grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      z-index: 1260 !important;
     }
 
     body.mobile-vpe-shell #bottomConstructorPanelBtn {

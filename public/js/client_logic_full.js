@@ -1043,10 +1043,8 @@ const MAX_CONSISTENCY_PREFIX = `FACE ID LOCKED from reference. Exact facial matc
 const MAX_CONSISTENCY_PREFIX_FLAT = "Face ID locked from reference. Exact facial match required - all features preserved. Consistency protocol: 100% facial feature preservation from reference image. Face locked: non-negotiable. Face consistency: 100%. All facial features must remain identical to the locked reference. Character integrity: maintain key features across all variations. Zero deviation from specified eye color, hair color, face structure, and unique identifiers. Keep the facial features of the person in the uploaded image exactly consistent. Do not modify their identity. Use the uploaded reference photo as the only identity source. Identity lock: keep face geometry, bone structure, eye color, hairline, skin tone, and all unique marks (moles/scars) 100% identical. Zero identity drift. Allow changes only in pose, camera angle, lighting, background, and clothing. Do not alter identity, age, ethnicity, or facial proportions.";
 
 const MAX_CONSISTENCY_FACE_CONSTRAINTS = [
-  "Keep the facial features of the person exactly consistent with the reference image",
-  "Do not modify their identity",
-  "Preserve all unique identifiers including exact eye color and hair color",
-  "Maintain identical bone structure, skin tone, and facial imperfections like moles and scars across all variations"
+  "Maintain exact facial identity and bone structure from the reference image.",
+  "Preserve eye color, hairline, skin tone, and unique facial markers across all variations."
 ];
 
 function getEffectiveAspectRatio() {
@@ -3258,6 +3256,112 @@ function sanitizePromptForJson(text) {
   return normalized || undefined;
 }
 
+const NBP_JSON_EXCLUDED_LINE_PATTERNS = [
+  /^\[(Model|Aspect|Resolution):/i,
+  /^(CAMERA|LIGHTING|EFFECTS|PALETTE|MOOD|SKIN|HAIR|MATERIALS|TEXT|STYLE|CINEMATOGRAPHY|DIRECTOR|ART STYLE|STYLE PRESET|FASHION\/FOOD STYLE|CINEMATIC STYLE|FILM STOCK|AMBIENCE|FOLEY|CINEMATIC FX|MODES|SEED|CFG|UPLOADED REFERENCES|REFERENCE GUIDANCE|REFERENCE \d+ EXTRACT)\s*:/,
+  /^Use \d+ uploaded reference image/i,
+  /^Reference \d+:/i
+];
+
+const NBP_IDENTITY_NOISE_PATTERNS = [
+  /face id locked/gi,
+  /face locked/gi,
+  /consistency protocol/gi,
+  /zero deviation/gi,
+  /non-negotiable/gi,
+  /100%\s*facial/gi,
+  /100%\s*identical/gi,
+  /exact facial match required/gi,
+  /identity lock/gi,
+  /do not modify their identity/gi,
+  /use the uploaded reference photo as the only identity source/gi
+];
+
+function normalizeIdentityConstraintText(text) {
+  const raw = String(text || "").trim();
+  if (!raw) return undefined;
+  let normalized = raw.replace(/\s+/g, " ").trim();
+  NBP_IDENTITY_NOISE_PATTERNS.forEach((pattern) => {
+    normalized = normalized.replace(pattern, (match) => match.toLowerCase());
+  });
+  normalized = normalized
+    .replace(/\bmust remain\b/gi, "should remain")
+    .replace(/\bmust\b/gi, "should")
+    .replace(/\babsolute\b/gi, "primary")
+    .replace(/\bexactly consistent\b/gi, "consistent")
+    .replace(/\b100%\b/g, "closely")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+  if (!normalized) return undefined;
+  return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+}
+
+function sanitizeNBPSceneText(text) {
+  let normalized = sanitizePromptForJson(text) || String(text || "").trim();
+  if (!normalized) return undefined;
+
+  const lines = normalized
+    .split(/\r?\n/)
+    .map((line) => String(line || "").trim())
+    .filter(Boolean)
+    .filter((line) => !NBP_JSON_EXCLUDED_LINE_PATTERNS.some((pattern) => pattern.test(line)))
+    .filter((line) => line !== "--- Reference images ---" && line !== "--- REFERENCES ---");
+
+  normalized = lines.join(" ");
+  normalized = normalized
+    .replace(/\bsubject:\s*/gi, "")
+    .replace(/\bnegative:\s*/gi, "")
+    .replace(/\bGenerate an image\.\s*/gi, "")
+    .replace(/\b(?:\d+K|\d+\s*[x×]\s*\d+|\d+mm|f\/\d(?:\.\d+)?)\b/gi, "")
+    .replace(/\b(?:aspect ratio|resolution|cfg|steps|stylize|chaos|weird|seed)\b[^.]*\.?/gi, "")
+    .replace(/--[a-z0-9:-]+(?:\s+[a-z0-9:./-]+)?/gi, "")
+    .replace(/\b(?:plastic skin|airbrushed|cgi|3d render|smooth makeup|bad anatomy|warped hands|extra limbs|watermark|flat lighting|plain background)\b/gi, "")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s+([,.;:!?])/g, "$1")
+    .replace(/([,.;:!?]){2,}/g, "$1")
+    .trim();
+
+  return normalized || undefined;
+}
+
+function buildNBPSubjectText() {
+  const rawSubject = sanitizeNBPSceneText(state.mainSubject || "");
+  if (!rawSubject) return undefined;
+  return rawSubject;
+}
+
+function buildNBPScenePrompt(subjectText) {
+  const details = [];
+  const emotionText = state.emotion && EMOTIONS[state.emotion] ? String(EMOTIONS[state.emotion]).trim() : "";
+  const lightingParts = getAllLightingSelections(state)
+    .concat(Array.isArray(state.lightFX) ? state.lightFX : [])
+    .map((value) => sanitizeNBPSceneText(value))
+    .filter(Boolean);
+  const moodText = sanitizeNBPSceneText(state.mood || "");
+  const paletteText = sanitizeNBPSceneText(state.colorPalette || "");
+
+  if (emotionText) details.push(`The expression feels ${emotionText.replace(/[.]+$/g, "").toLowerCase()}.`);
+  if (lightingParts.length) details.push(`The scene is lit with ${lightingParts.join(", ")}.`);
+  if (moodText) details.push(`The atmosphere feels ${moodText.toLowerCase()}.`);
+  if (paletteText) details.push(`The color mood leans toward ${paletteText.toLowerCase()}.`);
+
+  if (!details.length) {
+    const fallbackPrompt = sanitizeNBPSceneText(buildPromptTextForOutput({ includeRenderBoostInPrompt: false }) || "");
+    if (subjectText) return subjectText;
+    return fallbackPrompt;
+  }
+
+  return details.join(" ").trim();
+}
+
+function buildNBPFaceConstraints() {
+  if (!state.maxConsistency) return undefined;
+  const constraints = MAX_CONSISTENCY_FACE_CONSTRAINTS
+    .map((entry) => normalizeIdentityConstraintText(entry))
+    .filter(Boolean);
+  return constraints.length ? constraints.slice(0, 2) : undefined;
+}
+
 function normalizeNBPResolution(rawResolution, qualityHint) {
   const raw = String(rawResolution || "").trim().toLowerCase();
   if (raw === "1k" || raw === "2k" || raw === "4k") return raw.toUpperCase();
@@ -3594,10 +3698,8 @@ function buildModeSpecificPayload() {
 
 function buildNBPRequestPayload(targetModel) {
   const payloadModel = normalizeAiModelValue(targetModel || state.aiModel || getDefaultAiModel());
-  const outputPrompt = (buildPromptTextForOutput({ includeRenderBoostInPrompt: false }) || "").trim();
-  const fallbackPrompt = (state.mainSubject || "").trim();
-  const promptRaw = outputPrompt && !outputPrompt.includes("Выберите параметры слева") ? outputPrompt : fallbackPrompt;
-  const prompt = sanitizePromptForJson(promptRaw)?.replace(/\r?\n+/g, " ").replace(/\s{2,}/g, " ").trim() || undefined;
+  const subject = buildNBPSubjectText();
+  const prompt = buildNBPScenePrompt(subject);
   const nbpAspectRatio = normalizeNBPAspectRatio(getEffectiveAspectRatio(), payloadModel);
   const userNumImages = resolveUserNumImages();
   const negativePrompt = (state.negativePrompt || "").trim();
@@ -3607,21 +3709,16 @@ function buildNBPRequestPayload(targetModel) {
   const payload = {
     model: payloadModel,
     type: "text-to-image",
-    subject: state.mainSubject || undefined,
-    prompt_format: state.promptFormat || undefined,
+    subject: subject,
     prompt: prompt,
     resolution: normalizeNBPResolution(state.resolution, state.quality),
     aspect_ratio: nbpAspectRatio || undefined,
     num_images: userNumImages !== undefined ? userNumImages : 1,
-    technical: {
-      aspect_ratio: getEffectiveAspectRatio() || undefined,
-      resolution: state.resolution || undefined
-    },
     parameters: buildParametersPayload(),
     modes: buildModesPayload(),
     mode_payload: buildModeSpecificPayload(),
     renderBoost: renderBoost,
-    face_constraints: state.maxConsistency ? MAX_CONSISTENCY_FACE_CONSTRAINTS.slice() : undefined,
+    face_constraints: buildNBPFaceConstraints(),
     seed: state.seed || undefined,
     engine_params: buildEngineParamsPayload(payloadModel),
     references: referencesPayload,
@@ -3648,7 +3745,6 @@ function buildJson() {
   const standardPayload = {
     schema: "vpe-prompt-builder-v2",
     model: resolvedModel || null,
-    prompt_format: state.promptFormat || undefined,
     subject: state.mainSubject || "",
     prompt: jsonPrompt,
     prompt_flat: jsonPromptFlat,
@@ -3661,7 +3757,7 @@ function buildJson() {
     modes: buildModesPayload(),
     mode_payload: buildModeSpecificPayload(),
     renderBoost: buildRenderBoostPayload() || null,
-    face_constraints: state.maxConsistency ? MAX_CONSISTENCY_FACE_CONSTRAINTS.slice() : undefined,
+    face_constraints: buildNBPFaceConstraints(),
     seed: state.seed || null,
     engine_params: engineParams || null,
     references: referencesPayload,
@@ -3871,7 +3967,6 @@ function buildG4ForNBP(basePromptText) {
   if (state.quickStyle && QUICK_STYLES[state.quickStyle]) stylePreset = QUICK_STYLES[state.quickStyle];
   if (state.fashionFoodStyle && FASHION_FOOD_STYLES[state.fashionFoodStyle]) stylePreset = FASHION_FOOD_STYLES[state.fashionFoodStyle];
 
-  const ar = state.aspectRatio || "16:9";
   const res = state.resolution || "4K";
   const subject = state.mainSubject || "the subject";
   const emotion = state.emotion && EMOTIONS[state.emotion] ? EMOTIONS[state.emotion] : "";
@@ -3886,7 +3981,7 @@ function buildG4ForNBP(basePromptText) {
     task: "GENERATE_SCENE_VARIATIONS",
     instruction: "STRICT REQUIREMENT: Generate 4 SEPARATE, INDIVIDUAL images. Do NOT create a grid or collage. Execute the image generation tool 4 separate times.",
     identity_lock: state.maxConsistency
-      ? "The subject's face, bone structure, skin tone, and all physical features MUST remain 100% identical across all 4 images. The uploaded reference photo is the absolute source of facial identity. Zero deviation."
+      ? "Maintain facial identity and bone structure from the reference image across all four variations. Keep the same person recognizable while allowing shot changes."
       : "Maintain consistent character appearance across all variations.",
     base_scene: {
       subject: subject,
@@ -3900,8 +3995,6 @@ function buildG4ForNBP(basePromptText) {
       negative: neg
     },
     global_settings: {
-      aspect_ratio: ar,
-      resolution: res,
       consistency: "Maintain identical character, wardrobe, accessories. Only camera angle, framing, and environment change."
     },
     variations: [
@@ -4023,12 +4116,11 @@ function build3x3ForNBP(_basePromptText) {
     output_requirements: {
       deliverable: "ONE single master image",
       format: "3x3 Cinematic Contact Sheet",
-      aspect_ratio: "3:4",
       layout_rules: "Full-bleed grid, no outer margins, panels separated by perfectly straight, thin dark dividers"
     },
     consistency_protocol: {
       frozen_scene_logic: true,
-      rule: "Strict continuity across ALL 9 panels. The subject, environment, weather, and wardrobe MUST remain 100% static and identical.",
+      rule: "Keep the subject, environment, weather, and wardrobe visually consistent across all 9 panels.",
       allowed_changes: "Only camera proximity, angle, and depth of field may change per panel"
     },
     scene_content: {
