@@ -1,4 +1,4 @@
-const CACHE = "vpe-mobile-shell-v2";
+const CACHE = "vpe-mobile-shell-v3";
 const SHELL_ASSETS = [
   "./",
   "index.html",
@@ -7,7 +7,6 @@ const SHELL_ASSETS = [
   "../js/client_logic_full.js",
   "../js/action-buttons.js",
   "../js/section-visibility.js",
-  "../js/version-chooser.js",
   "js/mobile-shell.js",
   "../config/style-presets.json",
   "../config/prompt-templates.json",

@@ -22,10 +22,15 @@ import {
 
 const app = express();
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
+const apiWriteLimiter = rateLimit({
+  windowMs: 60_000,
+  max: 120,
+  standardHeaders: true,
+  legacyHeaders: false
+});
 
 app.use(helmet({ contentSecurityPolicy: false })); // CSP should be configured per deployment
 app.use(cors({ origin: false })); // lock down behind your reverse proxy / same-origin
-app.use(rateLimit({ windowMs: 60_000, max: 120 }));
 
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: true }));
@@ -89,7 +94,7 @@ app.get("/api/ui/buttons", (req, res) => {
 });
 
 // --- API: prompt generation
-app.post("/api/prompt", upload.array("images", 13), async (req, res) => {
+app.post("/api/prompt", apiWriteLimiter, upload.array("images", 13), async (req, res) => {
   try {
     let state = {};
     if (req.is("application/json")) {
@@ -109,14 +114,14 @@ app.post("/api/prompt", upload.array("images", 13), async (req, res) => {
 });
 
 // --- API: compact (placeholder: trims whitespace)
-app.post("/api/compact", (req, res) => {
+app.post("/api/compact", apiWriteLimiter, (req, res) => {
   const prompt = String(req.body?.prompt ?? "");
   const compacted = prompt.replace(/[ \t]+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
   res.json({ prompt: compacted });
 });
 
 // --- API: translate via MyMemory (same as client, server-side)
-app.post("/api/translate", async (req, res) => {
+app.post("/api/translate", apiWriteLimiter, async (req, res) => {
   try {
     const text = String(req.body?.text ?? "").trim();
     const to = String(req.body?.to ?? "en").trim();
@@ -140,7 +145,7 @@ app.post("/api/translate", async (req, res) => {
 });
 
 // --- API: enhance (Powered by VeoAIFree backend Proxy)
-app.post("/api/enhance", async (req, res) => {
+app.post("/api/enhance", apiWriteLimiter, async (req, res) => {
   const text = String(req.body?.text ?? "").trim();
   if (!text) return res.status(400).json({ error: "Empty text" });
 
