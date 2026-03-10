@@ -5,6 +5,7 @@
   const MASTER_TOGGLE_ID = "constructorToggleAll";
   const TOGGLE_BUTTON_ID = "constructorToggleBtn";
   const HEADER_PANEL_TOGGLE_ID = "headerConstructorPanelBtn";
+  const BOTTOM_PANEL_TOGGLE_ID = "bottomConstructorPanelBtn";
   const HIDDEN_CLASS = "menu-section-hidden";
   const SIDEBAR_COLLAPSED_CLASS = "sidebar-collapsed";
   const OVERLAY_OPEN_CLASS = "constructor-overlay-open";
@@ -655,11 +656,19 @@
     }
 
     if (toggleBtn) {
-      toggleBtn.setAttribute("aria-expanded", isCollapsed ? "false" : "true");
-      toggleBtn.textContent = isCollapsed ? "▶" : "◀";
-      const label = isCollapsed ? "Развернуть список конструктора" : "Свернуть список конструктора";
-      toggleBtn.setAttribute("aria-label", label);
-      toggleBtn.title = label;
+      const mobileMode = !isDesktopLayout();
+      if (mobileMode) {
+        toggleBtn.setAttribute("aria-expanded", document.body.classList.contains(OVERLAY_OPEN_CLASS) ? "true" : "false");
+        toggleBtn.textContent = "Закрыть";
+        toggleBtn.setAttribute("aria-label", "Закрыть конструктор");
+        toggleBtn.title = "Закрыть конструктор";
+      } else {
+        const label = isCollapsed ? "Развернуть список конструктора" : "Свернуть список конструктора";
+        toggleBtn.setAttribute("aria-expanded", isCollapsed ? "false" : "true");
+        toggleBtn.textContent = isCollapsed ? "▶" : "◀";
+        toggleBtn.setAttribute("aria-label", label);
+        toggleBtn.title = label;
+      }
     }
 
     syncHeaderOffset();
@@ -672,12 +681,15 @@
   function setConstructorOverlayOpen(isOpen) {
     const panel = document.getElementById(CONSTRUCTOR_PANEL_ID);
     const headerToggleBtn = document.getElementById(HEADER_PANEL_TOGGLE_ID);
-    const shouldOpen = Boolean(isOpen) && isDesktopLayout();
+    const bottomToggleBtn = document.getElementById(BOTTOM_PANEL_TOGGLE_ID);
+    const closeToggleBtn = document.getElementById(TOGGLE_BUTTON_ID);
+    const shouldOpen = Boolean(isOpen);
 
     document.body.classList.toggle(OVERLAY_OPEN_CLASS, shouldOpen);
+    document.body.style.overflow = shouldOpen ? "hidden" : "";
 
     if (panel) {
-      panel.setAttribute("aria-hidden", shouldOpen ? "false" : (isDesktopLayout() ? "true" : "false"));
+      panel.setAttribute("aria-hidden", shouldOpen ? "false" : "true");
     }
 
     if (headerToggleBtn) {
@@ -693,34 +705,26 @@
       }
     }
 
+    if (bottomToggleBtn) {
+      bottomToggleBtn.classList.toggle("is-open", shouldOpen);
+      bottomToggleBtn.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
+      bottomToggleBtn.setAttribute("aria-label", shouldOpen ? "Скрыть конструктор" : "Открыть конструктор");
+    }
+
+    if (closeToggleBtn && !isDesktopLayout()) {
+      closeToggleBtn.textContent = "Закрыть";
+      closeToggleBtn.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
+      closeToggleBtn.setAttribute("aria-label", "Закрыть конструктор");
+      closeToggleBtn.title = "Закрыть конструктор";
+    }
+
     syncHeaderOffset();
   }
 
   function syncConstructorOverlayMode() {
-    if (isDesktopLayout()) {
-      // Desktop starts with hidden overlay panel once, then preserves current state.
-      const currentlyOpen = document.body.classList.contains(OVERLAY_OPEN_CLASS);
-      setConstructorOverlayOpen(overlayModeInitialized ? currentlyOpen : false);
-      overlayModeInitialized = true;
-      return;
-    }
-
-    // Mobile/tablet fallback keeps constructor panel in normal flow.
-    document.body.classList.remove(OVERLAY_OPEN_CLASS);
+    const currentlyOpen = document.body.classList.contains(OVERLAY_OPEN_CLASS);
+    setConstructorOverlayOpen(overlayModeInitialized ? currentlyOpen : false);
     overlayModeInitialized = true;
-    const panel = document.getElementById(CONSTRUCTOR_PANEL_ID);
-    if (panel) {
-      panel.setAttribute("aria-hidden", "false");
-    }
-    const headerToggleBtn = document.getElementById(HEADER_PANEL_TOGGLE_ID);
-    if (headerToggleBtn) {
-      headerToggleBtn.classList.remove("is-open");
-      headerToggleBtn.setAttribute("aria-expanded", "false");
-      headerToggleBtn.setAttribute("aria-label", "Показать навигатор");
-      headerToggleBtn.title = "Показать навигатор";
-      const arrow = headerToggleBtn.querySelector(".header-constructor-arrow");
-      if (arrow) arrow.textContent = "▶";
-    }
   }
 
   function initHeaderPanelToggleButton() {
@@ -729,22 +733,21 @@
     if (!panel || !headerToggleBtn || headerToggleBtn.dataset.bound === "true") return;
 
     headerToggleBtn.addEventListener("click", () => {
-      if (!isDesktopLayout()) return;
       const isOpen = document.body.classList.contains(OVERLAY_OPEN_CLASS);
       setConstructorOverlayOpen(!isOpen);
     });
 
     document.addEventListener("click", (event) => {
-      if (!isDesktopLayout()) return;
       if (!document.body.classList.contains(OVERLAY_OPEN_CLASS)) return;
       if (panel.contains(event.target)) return;
       if (headerToggleBtn.contains(event.target)) return;
+      const bottomToggleBtn = document.getElementById(BOTTOM_PANEL_TOGGLE_ID);
+      if (bottomToggleBtn && bottomToggleBtn.contains(event.target)) return;
       setConstructorOverlayOpen(false);
     });
 
     document.addEventListener("keydown", (event) => {
       if (event.key !== "Escape") return;
-      if (!isDesktopLayout()) return;
       if (!document.body.classList.contains(OVERLAY_OPEN_CLASS)) return;
       setConstructorOverlayOpen(false);
     });
@@ -761,11 +764,43 @@
     if (!panel || !toggleBtn || toggleBtn.dataset.bound === "true") return;
 
     toggleBtn.addEventListener("click", () => {
+      if (!isDesktopLayout()) {
+        setConstructorOverlayOpen(false);
+        return;
+      }
       const isCollapsed = document.body.classList.contains(SIDEBAR_COLLAPSED_CLASS);
       setSidebarCollapsed(!isCollapsed);
     });
 
     toggleBtn.dataset.bound = "true";
+  }
+
+  function initBottomPanelToggleButton() {
+    const panel = document.getElementById(CONSTRUCTOR_PANEL_ID);
+    const bottomToggleBtn = document.getElementById(BOTTOM_PANEL_TOGGLE_ID);
+    if (!panel || !bottomToggleBtn || bottomToggleBtn.dataset.bound === "true") return;
+
+    bottomToggleBtn.addEventListener("click", () => {
+      const isOpen = document.body.classList.contains(OVERLAY_OPEN_CLASS);
+      setConstructorOverlayOpen(!isOpen);
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!document.body.classList.contains(OVERLAY_OPEN_CLASS)) return;
+      if (panel.contains(event.target)) return;
+      if (bottomToggleBtn.contains(event.target)) return;
+      const headerToggleBtn = document.getElementById(HEADER_PANEL_TOGGLE_ID);
+      if (headerToggleBtn && headerToggleBtn.contains(event.target)) return;
+      setConstructorOverlayOpen(false);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      if (!document.body.classList.contains(OVERLAY_OPEN_CLASS)) return;
+      setConstructorOverlayOpen(false);
+    });
+
+    bottomToggleBtn.dataset.bound = "true";
   }
 
   function syncHeaderOffset() {
@@ -804,6 +839,7 @@
     bindFloatingTipLifecycle();
     initConstructorToggleButton();
     initHeaderPanelToggleButton();
+    initBottomPanelToggleButton();
     renderConstructorItems();
     syncConstructorOverlayMode();
     syncHeaderOffset();

@@ -50,28 +50,34 @@
       });
     });
 
-    document.querySelectorAll("[data-mobile-action='constructor']").forEach((button) => {
-      button.addEventListener("click", () => {
-        const panel = document.getElementById("constructorPanel");
-        const isOpen = document.body.classList.contains("constructor-overlay-open");
-        const shouldOpen = !isOpen;
-
-        document.body.classList.toggle("constructor-overlay-open", shouldOpen);
-        document.body.style.overflow = shouldOpen ? "hidden" : "";
-        button.classList.toggle("is-open", shouldOpen);
-        button.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
-
-        if (panel) {
-          panel.setAttribute("aria-hidden", shouldOpen ? "false" : "true");
-        }
-
-        document.getElementById("constructorToggleBtn")?.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
-      });
-    });
-
     document.querySelectorAll("[data-mobile-action='desktop']").forEach((button) => {
       button.addEventListener("click", preferDesktop);
     });
+  }
+
+  function bindConstructorCloseButton() {
+    const closeButton = document.getElementById("constructorToggleBtn");
+    if (!closeButton || closeButton.dataset.mobileBound === "true") return;
+
+    const syncLabel = () => {
+      closeButton.textContent = "Закрыть";
+      closeButton.setAttribute("aria-label", "Закрыть конструктор");
+      closeButton.setAttribute("title", "Закрыть конструктор");
+    };
+
+    closeButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      document.body.classList.remove("constructor-overlay-open");
+      document.body.style.overflow = "";
+      document.getElementById("constructorPanel")?.setAttribute("aria-hidden", "true");
+      document.getElementById("bottomConstructorPanelBtn")?.classList.remove("is-open");
+      document.getElementById("bottomConstructorPanelBtn")?.setAttribute("aria-expanded", "false");
+      syncLabel();
+    });
+
+    syncLabel();
+    closeButton.dataset.mobileBound = "true";
   }
 
   function registerServiceWorker() {
@@ -83,6 +89,7 @@
     ensureMobileMode();
     openPrioritySections();
     bindBottomBar();
+    bindConstructorCloseButton();
     registerServiceWorker();
     window.preferDesktop = preferDesktop;
     document.body.classList.add("mobile-vpe-shell-ready");
