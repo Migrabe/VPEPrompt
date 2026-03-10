@@ -1220,6 +1220,104 @@ function getTooltipBoundaryRect(el) {
   return { top: 0, bottom: window.innerHeight };
 }
 
+function isTouchLikeTooltipMode() {
+  return document.body.classList.contains("mobile-vpe-shell") || window.matchMedia("(hover: none), (pointer: coarse)").matches;
+}
+
+let mobileHelpPopover = null;
+
+function ensureMobileHelpPopover() {
+  if (mobileHelpPopover && document.body.contains(mobileHelpPopover)) return mobileHelpPopover;
+  const el = document.createElement("div");
+  el.className = "mobile-help-popover";
+  el.setAttribute("aria-hidden", "true");
+  el.innerHTML = '<div class="mobile-help-popover__content"></div>';
+  document.body.appendChild(el);
+  mobileHelpPopover = el;
+  return el;
+}
+
+function hideMobileHelpPopover() {
+  if (!mobileHelpPopover) return;
+  mobileHelpPopover.classList.remove("is-visible");
+  mobileHelpPopover.setAttribute("aria-hidden", "true");
+}
+
+function showMobileHelpPopover(helpTip) {
+  const source = helpTip?.querySelector(".tip-text");
+  if (!source) return;
+
+  const popover = ensureMobileHelpPopover();
+  const content = popover.querySelector(".mobile-help-popover__content");
+  if (!content) return;
+
+  content.innerHTML = source.innerHTML;
+
+  const triggerRect = helpTip.getBoundingClientRect();
+  const viewportWidth = document.documentElement.clientWidth || window.innerWidth;
+  const viewportHeight = document.documentElement.clientHeight || window.innerHeight;
+  const gap = 8;
+  const sidePadding = 8;
+  const popoverWidth = Math.min(248, Math.max(188, viewportWidth - sidePadding * 2));
+
+  popover.style.width = `${popoverWidth}px`;
+  popover.style.maxWidth = `${popoverWidth}px`;
+  popover.style.left = "0px";
+  popover.style.top = "0px";
+  popover.classList.add("is-visible");
+  popover.setAttribute("aria-hidden", "false");
+
+  const measuredHeight = Math.ceil(popover.getBoundingClientRect().height) || 120;
+  const spaceBelow = viewportHeight - triggerRect.bottom - gap;
+  const spaceAbove = triggerRect.top - gap;
+  const openBelow = spaceBelow >= measuredHeight || spaceBelow >= spaceAbove;
+
+  let left = triggerRect.left + (triggerRect.width / 2) - (popoverWidth / 2);
+  left = Math.max(sidePadding, Math.min(left, viewportWidth - popoverWidth - sidePadding));
+
+  let top = openBelow
+    ? triggerRect.bottom + gap
+    : triggerRect.top - measuredHeight - gap;
+  top = Math.max(sidePadding, Math.min(top, viewportHeight - measuredHeight - sidePadding));
+
+  const arrowLeft = Math.max(18, Math.min(popoverWidth - 18, (triggerRect.left + triggerRect.width / 2) - left));
+
+  popover.style.left = `${Math.round(left)}px`;
+  popover.style.top = `${Math.round(top)}px`;
+  popover.style.setProperty("--popover-arrow-left", `${Math.round(arrowLeft)}px`);
+  popover.classList.toggle("popover-up", !openBelow);
+  popover.classList.toggle("popover-down", openBelow);
+}
+
+function closeOpenHelpTips(exceptTip = null) {
+  document.querySelectorAll(".help-tip.is-open").forEach((tip) => {
+    if (tip !== exceptTip) {
+      tip.classList.remove("is-open");
+      tip.setAttribute("aria-expanded", "false");
+    }
+  });
+  if (!exceptTip) hideMobileHelpPopover();
+}
+
+function setHelpTipOpen(helpTip, shouldOpen) {
+  if (!helpTip) return;
+  helpTip.classList.toggle("is-open", shouldOpen);
+  helpTip.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
+  if (shouldOpen) {
+    if (isTouchLikeTooltipMode()) showMobileHelpPopover(helpTip);
+    else positionHelpTip(helpTip);
+  } else if (isTouchLikeTooltipMode()) {
+    hideMobileHelpPopover();
+  }
+}
+
+function toggleHelpTip(helpTip) {
+  if (!helpTip) return;
+  const shouldOpen = !helpTip.classList.contains("is-open");
+  closeOpenHelpTips(helpTip);
+  setHelpTipOpen(helpTip, shouldOpen);
+}
+
 function positionHelpTip(helpTip) {
   if (!helpTip) return;
   const tipText = helpTip.querySelector(".tip-text");
@@ -1229,8 +1327,14 @@ function positionHelpTip(helpTip) {
   const boundary = getTooltipBoundaryRect(helpTip);
   const visibleTop = Math.max(0, boundary.top || 0);
   const visibleBottom = Math.min(window.innerHeight, boundary.bottom || window.innerHeight);
-  const tipHeight = Math.max(Math.ceil(tipText.getBoundingClientRect().height), tipText.scrollHeight || 0, 120);
   const gap = 14;
+
+  if (isTouchLikeTooltipMode()) {
+    if (helpTip.classList.contains("is-open")) showMobileHelpPopover(helpTip);
+    return;
+  }
+
+  const tipHeight = Math.max(Math.ceil(tipText.getBoundingClientRect().height), tipText.scrollHeight || 0, 120);
 
   const spaceBelow = visibleBottom - triggerRect.bottom - gap;
   const spaceAbove = triggerRect.top - visibleTop - gap;
@@ -1247,6 +1351,12 @@ function initAdaptiveHelpTips() {
     requestAnimationFrame(() => positionHelpTip(helpTip));
   };
 
+  document.querySelectorAll(".help-tip").forEach((tip) => {
+    tip.setAttribute("role", "button");
+    tip.setAttribute("tabindex", "0");
+    tip.setAttribute("aria-expanded", tip.classList.contains("is-open") ? "true" : "false");
+  });
+
   document.addEventListener("mouseover", (e) => {
     const helpTip = resolveHelpTip(e.target);
     if (!helpTip) return;
@@ -1259,8 +1369,39 @@ function initAdaptiveHelpTips() {
     schedule(helpTip);
   });
 
+  if (!document.body.dataset.helpTipDelegated) {
+    document.addEventListener("click", (e) => {
+      const helpTip = resolveHelpTip(e.target);
+      if (helpTip) {
+        if (!isTouchLikeTooltipMode()) {
+          schedule(helpTip);
+          return;
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        toggleHelpTip(helpTip);
+        return;
+      }
+      closeOpenHelpTips();
+    }, true);
+    document.body.dataset.helpTipDelegated = "true";
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" || e.key === "Esc") {
+      closeOpenHelpTips();
+      return;
+    }
+    const helpTip = resolveHelpTip(e.target);
+    if (!helpTip) return;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      toggleHelpTip(helpTip);
+    }
+  });
+
   const repositionVisibleTips = () => {
-    document.querySelectorAll(".help-tip:hover, .help-tip:focus-within").forEach((tip) => positionHelpTip(tip));
+    document.querySelectorAll(".help-tip:hover, .help-tip:focus-within, .help-tip.is-open").forEach((tip) => positionHelpTip(tip));
   };
   window.addEventListener("resize", repositionVisibleTips);
   document.addEventListener("scroll", repositionVisibleTips, true);
@@ -1306,7 +1447,7 @@ function captureUndoSnapshot() {
 
 function shouldCaptureUndoFromTarget(target) {
   if (!target || !(target instanceof Element)) return false;
-  if (target.closest("#headerUndoBtn, #headerCollapseBtn, #headerConstructorPanelBtn, #constructorToggleBtn, #copyPromptBtn, #copyJsonBtn, #saveBtn, #saveJsonBtn, #compactBtn")) {
+  if (target.closest("#headerUndoBtn, #headerCollapseBtn, #headerConstructorPanelBtn, #constructorToggleBtn, #bottomConstructorPanelBtn, #copyPromptBtn, #copyJsonBtn, #saveBtn, #saveJsonBtn, #compactBtn")) {
     return false;
   }
   return !!target.closest(".option-btn[data-group], .option-btn[data-preset-index], .option-btn[data-action='addNegative'], .format-tab, .toggle-label, #randomSeedBtn, #clearSeedBtn, #resetBtn, #headerResetBtn, #translateBtn, #enhanceBtn, input, textarea, select, .tag .remove");
@@ -4717,20 +4858,6 @@ function collectConflictWarnings() {
   const promptTextForLimit = buildPromptTextForOutput({ includeRenderBoostInPrompt: false }) || "";
   if (maxPromptChars > 0 && promptTextForLimit.length > maxPromptChars) {
     warnings.push(`Промпт превышает лимит для модели (${promptTextForLimit.length}/${maxPromptChars} символов).`);
-  }
-
-  const requiredJsonFields = getModelRequiredJsonFields(state.aiModel);
-  if (requiredJsonFields.length) {
-    const resolvedModel = normalizeAiModelValue(state.aiModel || "");
-    const activeModelForCapabilities = resolvedModel || (state.quickStyle ? getDefaultAiModel() : (state.aiModel || ""));
-    const jsonPayload = buildJson() || {};
-    const missingKeys = requiredJsonFields.filter((key) => {
-      if (!shouldRequireJsonFieldForCurrentState(key, resolvedModel, activeModelForCapabilities)) return false;
-      return !Object.prototype.hasOwnProperty.call(jsonPayload, key);
-    });
-    if (missingKeys.length) {
-      warnings.push("JSON не содержит обязательные поля модели: " + missingKeys.join(", "));
-    }
   }
 
   return warnings;

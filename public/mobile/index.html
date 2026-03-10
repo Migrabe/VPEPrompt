@@ -3742,6 +3742,512 @@
       }
     }
   </style>
+  <style>
+    body.mobile-vpe-shell .app-header {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      right: auto !important;
+      width: 100% !important;
+      padding: 0 !important;
+      border: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      gap: 10px !important;
+      min-height: auto !important;
+    }
+
+    body.mobile-vpe-shell .header-left {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 10px !important;
+      padding: 76px 4px 0 !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+
+    body.mobile-vpe-shell .logo-stack {
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      min-width: 0 !important;
+      width: auto !important;
+      flex: 0 0 auto !important;
+    }
+
+    body.mobile-vpe-shell .logo {
+      width: 26px !important;
+      height: 26px !important;
+      min-width: 26px !important;
+      min-height: 26px !important;
+      border-radius: 8px !important;
+      font-size: 0.58rem !important;
+      line-height: 1 !important;
+      letter-spacing: 0.02em !important;
+      flex: 0 0 26px !important;
+    }
+
+    body.mobile-vpe-shell .mobile-brand-copy {
+      min-width: 0;
+      flex: 1 1 auto;
+      width: auto;
+      flex: 0 1 auto;
+    }
+
+    body.mobile-vpe-shell .midnight-window-controls,
+    body.mobile-vpe-shell .suite-badge,
+    body.mobile-vpe-shell .suite-models,
+    body.mobile-vpe-shell .build-note,
+    body.mobile-vpe-shell #hosting-info,
+    body.mobile-vpe-shell .mobile-intro,
+    body.mobile-vpe-shell .attributes-heading,
+    body.mobile-vpe-shell .header-constructor-block {
+      display: none !important;
+    }
+
+    body.mobile-vpe-shell .brand-line {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: auto !important;
+    }
+
+    body.mobile-vpe-shell .header h1 {
+      margin: 0 !important;
+      white-space: nowrap !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: auto !important;
+      font-size: clamp(0.98rem, 4.9vw, 1.14rem) !important;
+      font-weight: 820 !important;
+      line-height: 1 !important;
+      letter-spacing: 0.04em !important;
+      text-transform: uppercase !important;
+      color: #dbe8ff !important;
+      text-align: center !important;
+      text-shadow: 0 0 12px rgba(146, 175, 245, 0.26) !important;
+    }
+
+    body.mobile-vpe-shell .header h1 .title-initial {
+      color: #ff5f6d !important;
+      text-shadow: 0 0 14px rgba(255, 95, 109, 0.24) !important;
+    }
+
+    body.mobile-vpe-shell .header-right {
+      position: fixed !important;
+      left: 12px !important;
+      right: 12px !important;
+      width: calc(100vw - 24px) !important;
+      max-width: calc(100vw - 24px) !important;
+      top: calc(6px + env(safe-area-inset-top)) !important;
+      z-index: 1400 !important;
+      display: grid !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      gap: 6px !important;
+      padding: 6px !important;
+      box-sizing: border-box !important;
+      align-items: stretch !important;
+      border: 1px solid rgba(115, 210, 255, 0.22) !important;
+      border-radius: 18px !important;
+      background: linear-gradient(180deg, rgba(8, 20, 31, 0.96), rgba(7, 18, 28, 0.92)) !important;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28) !important;
+      backdrop-filter: blur(18px) !important;
+      -webkit-backdrop-filter: blur(18px) !important;
+    }
+
+    body.mobile-vpe-shell .header-right .option-btn {
+      min-width: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-height: 30px !important;
+      height: 30px !important;
+      padding: 3px 8px !important;
+      border-radius: 10px !important;
+      font-size: 0.74rem !important;
+      box-sizing: border-box !important;
+      overflow: hidden !important;
+      justify-content: center !important;
+      text-align: center !important;
+      line-height: 1 !important;
+    }
+
+    body.mobile-vpe-shell .header-right .option-btn .vpe-btn-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    body.mobile-vpe-shell .main-layout {
+      gap: 14px !important;
+    }
+
+    body.mobile-vpe-shell .main-menu-panel {
+      order: 1 !important;
+    }
+
+    body.mobile-vpe-shell .prompt-output-panel {
+      order: 2 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      justify-self: stretch !important;
+      align-self: stretch !important;
+    }
+
+    body.mobile-vpe-shell .prompt-output-panel .right-panel {
+      position: static !important;
+      top: auto !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+      box-sizing: border-box !important;
+    }
+
+    body.mobile-vpe-shell #promptOutputPanel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    body.mobile-vpe-shell #promptOutputPanel > .section.prompt-box {
+      display: flex !important;
+      flex-direction: column;
+      min-height: auto !important;
+      flex: 0 0 auto !important;
+    }
+
+    body.mobile-vpe-shell #promptOutputPanel > .section.prompt-box > .section-content {
+      display: flex !important;
+      flex-direction: column;
+      gap: 12px;
+      min-height: auto !important;
+      overflow: visible !important;
+    }
+
+    body.mobile-vpe-shell #promptSection .output-box,
+    body.mobile-vpe-shell #jsonSection .json-box {
+      min-height: 220px !important;
+      height: auto !important;
+      max-height: min(46svh, 420px) !important;
+      overflow: auto !important;
+    }
+
+    body.mobile-vpe-shell .stats-row {
+      display: grid !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      width: 100% !important;
+      gap: 10px !important;
+    }
+
+    body.mobile-vpe-shell .stat-card {
+      width: 100% !important;
+      min-height: 46px !important;
+      padding: 4px 8px !important;
+      border-radius: 14px !important;
+    }
+
+    body.mobile-vpe-shell .stat-value {
+      font-size: 0.92rem !important;
+      line-height: 1 !important;
+      margin-bottom: 1px !important;
+    }
+
+    body.mobile-vpe-shell .stat-label {
+      font-size: 0.62rem !important;
+      line-height: 0.95 !important;
+      letter-spacing: 0.04em;
+    }
+
+    body.mobile-vpe-shell .action-row {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px !important;
+    }
+
+    body.mobile-vpe-shell .action-row > * {
+      width: 100%;
+    }
+
+    body.mobile-vpe-shell #generationModeSection.generation-inline {
+      display: block !important;
+    }
+
+    body.mobile-vpe-shell #generationModeSection.generation-inline .section-content {
+      margin-top: 12px !important;
+    }
+
+    body.mobile-vpe-shell #generationModeSection .toggle-row {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      gap: 8px !important;
+    }
+
+    body.mobile-vpe-shell #generationModeSection .toggle-label {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) auto !important;
+      align-items: center !important;
+      gap: 10px !important;
+      min-height: 42px !important;
+      padding: 8px 12px !important;
+      border-radius: 12px !important;
+      line-height: 1.25 !important;
+      font-size: 0.86rem !important;
+    }
+
+    body.mobile-vpe-shell .constructor-scrim {
+      position: fixed;
+      inset: 0;
+      z-index: 1180;
+      background: rgba(2, 8, 14, 0.58);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s ease;
+    }
+
+    body.mobile-vpe-shell.constructor-overlay-open .constructor-scrim {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    body.mobile-vpe-shell .constructor-panel {
+      position: fixed !important;
+      top: calc(var(--app-header-offset) + 2px) !important;
+      left: 10px !important;
+      bottom: calc(90px + env(safe-area-inset-bottom)) !important;
+      width: min(84vw, 320px) !important;
+      transform: translateX(calc(-100% - 24px)) !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      z-index: 1190 !important;
+      margin: 0 !important;
+      overflow-y: auto !important;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+    }
+
+    body.mobile-vpe-shell.constructor-overlay-open .constructor-panel {
+      transform: translateX(0) !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+
+    body.mobile-vpe-shell .constructor-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 100%;
+      height: auto;
+      max-height: none;
+      overflow: visible;
+      position: relative;
+    }
+
+    body.mobile-vpe-shell .constructor-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 0 !important;
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      padding: 2px 0 10px;
+      background: linear-gradient(180deg, rgba(16, 27, 46, 0.98), rgba(16, 27, 46, 0.94) 82%, rgba(16, 27, 46, 0));
+      border-bottom: 1px solid rgba(116, 150, 224, 0.18);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    body.mobile-vpe-shell .constructor-title {
+      margin: 0;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.74rem !important;
+      line-height: 1;
+    }
+
+    body.mobile-vpe-shell .navigator-subtitle {
+      display: none !important;
+      margin-top: 4px;
+      color: #e4efff;
+      font-size: 0.96rem;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    body.mobile-vpe-shell .constructor-controls {
+      display: block !important;
+      flex: none;
+      min-height: auto;
+      overflow: visible !important;
+      padding-right: 0;
+      padding-top: 2px;
+    }
+
+    body.mobile-vpe-shell .constructor-toggle {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      align-self: center;
+      min-width: auto !important;
+      min-height: 28px !important;
+      padding: 0 10px !important;
+      border-radius: 999px !important;
+      border: 1px solid rgba(121, 240, 255, 0.2) !important;
+      background: rgba(17, 36, 58, 0.92) !important;
+      color: #dbeeff !important;
+      font-size: 0.74rem !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.02em;
+      line-height: 1 !important;
+      text-align: center !important;
+      box-shadow: inset 0 1px 0 rgba(185, 228, 255, 0.1) !important;
+      white-space: nowrap;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    body.mobile-vpe-shell .constructor-toggle:hover,
+    body.mobile-vpe-shell .constructor-toggle:active {
+      border-color: rgba(126, 243, 198, 0.34) !important;
+      background: rgba(20, 43, 69, 0.96) !important;
+      color: #ffffff !important;
+    }
+
+    body.mobile-vpe-shell .constructor-toggle:focus-visible {
+      outline: 2px solid rgba(126, 243, 198, 0.72) !important;
+      outline-offset: 2px !important;
+    }
+
+    body.mobile-vpe-shell .constructor-items {
+      flex: none;
+      min-height: auto;
+      padding-bottom: 16px;
+    }
+
+    body.mobile-vpe-shell .help-tip {
+      position: relative !important;
+      width: 32px !important;
+      height: 32px !important;
+      min-width: 32px !important;
+      min-height: 32px !important;
+      margin-left: 8px !important;
+      font-size: 0.86rem !important;
+      z-index: 2600 !important;
+    }
+
+    body.mobile-vpe-shell .left-panel .section,
+    body.mobile-vpe-shell .right-panel .section,
+    body.mobile-vpe-shell .section-header {
+      overflow: visible !important;
+    }
+
+    body.mobile-vpe-shell .left-panel .section,
+    body.mobile-vpe-shell .right-panel .section {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    body.mobile-vpe-shell .help-tip .tip-text {
+      display: none !important;
+    }
+
+    body.mobile-vpe-shell .mobile-help-popover {
+      position: fixed;
+      left: 8px;
+      top: 72px;
+      z-index: 3200;
+      display: block;
+      width: min(248px, calc(100vw - 16px));
+      max-width: min(248px, calc(100vw - 16px));
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(138, 162, 223, 0.34);
+      background: rgba(8, 13, 22, 0.98);
+      color: #e7efff;
+      box-shadow: 0 14px 34px rgba(2, 5, 12, 0.68);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(6px) scale(0.98);
+      transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+      overflow: auto;
+      max-height: min(44svh, calc(100vh - 16px));
+    }
+
+    body.mobile-vpe-shell .mobile-help-popover.is-visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    body.mobile-vpe-shell .mobile-help-popover::after {
+      content: "";
+      position: absolute;
+      left: var(--popover-arrow-left, 24px);
+      width: 12px;
+      height: 12px;
+      background: rgba(8, 13, 22, 0.98);
+      border-left: 1px solid rgba(138, 162, 223, 0.34);
+      border-top: 1px solid rgba(138, 162, 223, 0.34);
+      transform: rotate(45deg);
+    }
+
+    body.mobile-vpe-shell .mobile-help-popover.popover-down::after {
+      top: -7px;
+    }
+
+    body.mobile-vpe-shell .mobile-help-popover.popover-up::after {
+      bottom: -7px;
+      transform: rotate(225deg);
+    }
+
+    body.mobile-vpe-shell .mobile-help-popover__content {
+      font-size: 0.82rem;
+      line-height: 1.45;
+      color: inherit;
+    }
+
+    body.mobile-vpe-shell .mobile-bottom-bar {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    body.mobile-vpe-shell #bottomConstructorPanelBtn {
+      border-color: rgba(120, 235, 255, 0.56) !important;
+      background:
+        linear-gradient(135deg, rgba(123, 239, 255, 0.96), rgba(255, 193, 122, 0.94)) !important;
+      color: #082033 !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.38),
+        0 10px 22px rgba(96, 208, 255, 0.24),
+        0 0 0 1px rgba(255, 236, 188, 0.18) !important;
+      text-shadow: none !important;
+    }
+
+    body.mobile-vpe-shell #bottomConstructorPanelBtn:hover,
+    body.mobile-vpe-shell #bottomConstructorPanelBtn:active,
+    body.mobile-vpe-shell #bottomConstructorPanelBtn.is-open {
+      background:
+        linear-gradient(135deg, rgba(142, 244, 255, 1), rgba(255, 204, 140, 0.98)) !important;
+      border-color: rgba(157, 245, 255, 0.82) !important;
+      color: #051824 !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.42),
+        0 12px 28px rgba(105, 214, 255, 0.28),
+        0 0 0 1px rgba(255, 240, 197, 0.24) !important;
+    }
+  </style>
 </head>
 
 <body class="developer-suite mobile-vpe-shell">
@@ -3751,74 +4257,34 @@
   <div class="wrap">
     <div class="app">
       <header class="header app-header">
-        <div class="header-constructor-block">
-          <span class="header-constructor-title">Конструктор</span>
-          <button type="button" class="header-constructor-toggle" id="headerConstructorPanelBtn"
-            aria-controls="constructorPanel" aria-expanded="false" aria-label="Показать навигатор"
-            title="Показать навигатор">
-            <span class="header-constructor-arrow" aria-hidden="true">▶</span>
-          </button>
-        </div>
         <div class="header-left">
           <div class="logo-stack">
             <div class="logo">VPE</div>
-            <div class="midnight-window-controls" aria-hidden="true">
-              <span class="mw-dot red"></span>
-              <span class="mw-dot yellow"></span>
-              <span class="mw-dot green"></span>
-            </div>
           </div>
-          <div>
+          <div class="mobile-brand-copy">
             <div class="brand-line">
-              <h1>VPE Prompt Builder 2026</h1>
-              <span class="suite-badge"><span class="suite-badge-accent">V</span>isual <span
-                  class="suite-badge-accent">P</span>rompt <span class="suite-badge-accent">E</span>ngineering Developer
-                Suite</span>
+              <h1><span class="title-initial">V</span>ISUAL <span class="title-initial">P</span>ROMPT <span class="title-initial">E</span>NGINEERING</h1>
             </div>
-            <div class="suite-models">Midjourney / DALL·E 3 / Stable Diffusion / Flux / Ideogram / Gemini Imagen /
-              ChatGPT Image / Nano Banana Pro</div>
-            <div id="hosting-info"
-              style="font-size: 0.75em; color: var(--muted); margin-top: 4px; display: flex; align-items: center; gap: 8px;">
-              <span id="hosting-status" style="font-weight: 600;">Проверка хоста...</span>
-              <a id="render-link" href="https://vpe-master-wide.onrender.com" target="_blank"
-                style="color: var(--accent-k); display: none; text-decoration: underline;">Открыть полную версию
-                (Render)
-                →</a>
-            </div>
-            <div class="build-note" style="margin-top: 2px;">Midjourney / DALL·E 3 / Stable Diffusion / Flux / Ideogram
-              / Gemini Imagen / ChatGPT Image / Nano Banana Pro</div>
           </div>
         </div>
         <div class="header-right">
-          <a class="option-btn version-link" href="../?view=desktop" style="text-decoration:none;"
-            onclick="localStorage.setItem('prefer-desktop','1'); document.cookie='prefer-desktop=1; max-age=31536000; path=/; SameSite=Lax';">Desktop</a>
           <button class="option-btn action-btn" id="headerUndoBtn" data-action-id="undo-step"
-            title="Шаг назад">↶</button>
+            title="Назад">↶</button>
           <button class="option-btn action-btn" id="headerCollapseBtn" data-action-id="collapse-all"
             title="Свернуть секции">▤</button>
           <button class="option-btn action-btn" id="headerResetBtn" data-action-id="header-reset"
             title="Сброс">↺</button>
         </div>
       </header>
-      <section class="mobile-intro" aria-label="Mobile overview">
-        <div class="mobile-intro-copy">
-          <span class="mobile-eyebrow">Mobile Studio</span>
-          <h2>Новая мобильная оболочка для быстрого создания промптов одной рукой.</h2>
-          <p>Приоритет отдан активным параметрам, prompt-output и touch-friendly управлению. Десктопная версия остается
-            отдельной и доступна по кнопке Desktop.</p>
-        </div>
-        <div class="mobile-intro-actions">
-          <a href="#promptSection" class="mobile-chip">Prompt</a>
-          <a href="#jsonSection" class="mobile-chip">JSON</a>
-          <a href="#mainMenuPanel" class="mobile-chip">Controls</a>
-        </div>
-      </section>
       <div class="main-layout" id="mainLayout">
+        <div class="constructor-scrim" id="constructorScrim" aria-hidden="true"></div>
         <aside class="constructor-panel" id="constructorPanel">
           <div class="constructor-card">
             <div class="constructor-title-row">
+              <div class="constructor-title">Конструктор</div>
               <button type="button" class="constructor-toggle" id="constructorToggleBtn"
-                aria-controls="constructorControls" aria-expanded="false">Показать</button>
+                aria-controls="constructorControls" aria-expanded="false" aria-label="Закрыть конструктор"
+                title="Закрыть конструктор">Закрыть</button>
             </div>
             <div class="constructor-controls" id="constructorControls">
               <label class="constructor-item master">
@@ -5815,8 +6281,6 @@
         <!-- RIGHT PANEL -->
         <aside class="prompt-output-panel">
           <div class="right-panel" id="promptOutputPanel">
-            <div class="attributes-heading">Attributes</div>
-
             <div class="stats-row">
               <div class="stat-card">
                 <div class="stat-value" id="charCount">18</div>
@@ -5982,10 +6446,10 @@
         сброшено</div>
       <div class="mobile-safe-spacer" aria-hidden="true"></div>
       <nav class="mobile-bottom-bar" aria-label="Mobile quick actions">
-        <button type="button" class="mobile-bar-btn" data-mobile-nav-target="mainMenuPanel">Параметры</button>
+        <button type="button" class="mobile-bar-btn mobile-bar-btn-accent" id="bottomConstructorPanelBtn"
+          data-mobile-action="constructor">Конструктор</button>
         <button type="button" class="mobile-bar-btn" data-mobile-nav-target="promptSection">Prompt</button>
         <button type="button" class="mobile-bar-btn" data-mobile-nav-target="jsonSection">JSON</button>
-        <button type="button" class="mobile-bar-btn mobile-bar-btn-accent" data-mobile-action="desktop">Desktop</button>
       </nav>
 
     </div>
