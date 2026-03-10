@@ -41,9 +41,31 @@
   function bindBottomBar() {
     document.querySelectorAll("[data-mobile-nav-target]").forEach((button) => {
       button.addEventListener("click", () => {
+        document.body.classList.remove("constructor-overlay-open");
+        document.body.style.overflow = "";
+        document.getElementById("bottomConstructorPanelBtn")?.setAttribute("aria-expanded", "false");
         const target = document.getElementById(button.dataset.mobileNavTarget);
         if (!target) return;
         target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    document.querySelectorAll("[data-mobile-action='constructor']").forEach((button) => {
+      button.addEventListener("click", () => {
+        const panel = document.getElementById("constructorPanel");
+        const isOpen = document.body.classList.contains("constructor-overlay-open");
+        const shouldOpen = !isOpen;
+
+        document.body.classList.toggle("constructor-overlay-open", shouldOpen);
+        document.body.style.overflow = shouldOpen ? "hidden" : "";
+        button.classList.toggle("is-open", shouldOpen);
+        button.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
+
+        if (panel) {
+          panel.setAttribute("aria-hidden", shouldOpen ? "false" : "true");
+        }
+
+        document.getElementById("constructorToggleBtn")?.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
       });
     });
 
