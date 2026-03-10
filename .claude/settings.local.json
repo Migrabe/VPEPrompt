@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude plugin marketplace add FlorianBruniaux/claude-code-plugins)",
+      "Bash(cmd.exe /c \"where claude 2>&1\")",
+      "Bash(cmd.exe /c \"claude --version 2>&1\")",
+      "Bash(cmd.exe /c \"npx claude --version 2>&1\")",
+      "Bash(cmd.exe /c \"dir /s /b C:\\\\Users\\\\TOT\\\\AppData\\\\Roaming\\\\npm\\\\claude* 2>&1 | head -10\")",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(grep -v \"//.*innerHTML\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(curl -s http://localhost:3000/)",
+      "Bash(curl -s http://localhost:3000/api/enhance -X POST -H \"Content-Type: application/json\" -d '{\"\"text\"\":\"\"test\"\"}')",
+      "Bash(curl -s -X POST http://localhost:3000/api/enhance -H \"Content-Type: application/json\" -d '{\"\"text\"\":\"\"cinematic sunset over mountains\"\"}')",
+      "Bash(node scripts/smoke_runtime_check.mjs)"
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "data": [
+    {
+      "id": "hero_key_visual",
+      "format": "svg",
+      "size": "1536x1024",
+      "path": "output/imagegen/apple-ios-v1-local/001-hero-liquid-glass.svg",
+      "status": "generated_local"
+    },
+    {
+      "id": "device_mockup_portrait",
+      "format": "svg",
+      "size": "1024x1536",
+      "path": "output/imagegen/apple-ios-v1-local/002-device-mockup-portrait.svg",
+      "status": "generated_local"
+    },
+    {
+      "id": "bento_feature_showcase",
+      "format": "svg",
+      "size": "1536x1024",
+      "path": "output/imagegen/apple-ios-v1-local/003-bento-feature-showcase.svg",
+      "status": "generated_local"
+    },
+    {
+      "id": "feature_objects_3d",
+      "format": "svg",
+      "size": "1024x1024",
+      "path": "output/imagegen/apple-ios-v1-local/004-feature-objects.svg",
+      "status": "generated_local"
+    }
+  ],
+  "meta": {
+    "style": "Apple iOS-inspired, minimal premium, liquid glass",
+    "generated_with": "local handcrafted SVG",
+    "api_usage": "none",
+    "date": "2026-03-06"
+  }
+}
